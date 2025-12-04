@@ -6,6 +6,8 @@ enum Quality {
     case low
     case medium
     case high
+    case ultraHigh
+    case lossless
 }
 
 enum GameMode {
@@ -132,6 +134,14 @@ struct ContentView: View {
                     }
                     Option(title: "High", value: .high) { value in
                         print("--> Select \(value)")
+                    }
+                    Section(title: "Fiber Networks") {
+                        Option(title: "Ultra-High", value: .ultraHigh) { value in
+                            print("--> Select \(value)")
+                        }
+                        Option(title: "Lossless", value: .lossless) { value in
+                            print("--> Select \(value)")
+                        }
                     }
                 }
             }
