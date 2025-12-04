@@ -8,6 +8,11 @@ enum Quality {
     case high
 }
 
+enum GameMode {
+    case lowPower
+    case normal
+}
+
 struct ContentView: View {
     @State private var player = AVPlayer(
         url: URL(string: "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8")!
@@ -17,6 +22,7 @@ struct ContentView: View {
     @State private var isMicrophoneEnabled = false
     @State private var areHeadphonesEnabled = false
     @State private var quality: Quality = .medium
+    @State private var gameMode: GameMode = .normal
 
     var body: some View {
         PlayerView(player: player)
@@ -49,6 +55,14 @@ struct ContentView: View {
                         }
                         Action(title: "R1", image: UIImage(systemName: "r1.button.roundedbottom.horizontal")!) {
                             print("--> R1")
+                        }
+                    }
+                    SelectionMenu(title: "Game mode", image: UIImage(systemName: "gamecontroller")!, selection: $gameMode) {
+                        Option(title: "Low power", value: .lowPower) { value in
+                            print("--> Select \(value)")
+                        }
+                        Option(title: "Normal", value: .normal) { value in
+                            print("--> Select \(value)")
                         }
                     }
                 }
