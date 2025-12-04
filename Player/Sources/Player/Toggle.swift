@@ -16,14 +16,16 @@ public struct ToggleInMenu: MenuElementConvertible {
     let isOn: Binding<Bool>
     let handler: (Bool) -> Void
 
+    private func state(isOn: Binding<Bool>) -> UIMenuElement.State {
+        isOn.wrappedValue ? .on : .off
+    }
+
     public func toMenuElement() -> UIMenuElement {
-        let action = UIAction(title: title, image: image) { action in
+        UIAction(title: title, image: image, state: state(isOn: isOn)) { action in
             isOn.wrappedValue.toggle()
-            action.state = isOn.wrappedValue ? .on : .off
+            action.state = state(isOn: isOn)
             handler(isOn.wrappedValue)
         }
-        action.state = isOn.wrappedValue ? .on : .off
-        return action
     }
 }
 

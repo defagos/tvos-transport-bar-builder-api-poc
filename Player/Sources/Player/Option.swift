@@ -16,14 +16,16 @@ public struct OptionInSelectionMenu<Value>: BoundMenuElementConvertible where Va
     let value: Value
     let handler: () -> Void
 
+    private func state(selection: Binding<Value>) -> UIMenuElement.State {
+        selection.wrappedValue == value ? .on : .off
+    }
+
     public func toMenuElement(selection: Binding<Value>) -> UIMenuElement {
-        let action = UIAction(title: title, image: image) { action in
+        UIAction(title: title, image: image, state: state(selection: selection)) { action in
             selection.wrappedValue = value
-            action.state = .on
+            action.state = state(selection: selection)
             handler()
         }
-        action.state = (selection.wrappedValue == value) ? .on : .off
-        return action
     }
 }
 
