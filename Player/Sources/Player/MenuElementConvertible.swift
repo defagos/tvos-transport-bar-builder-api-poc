@@ -11,5 +11,5 @@ public protocol BoundMenuElementConvertible<Value> {
 }
 
 public protocol MenuElement: MenuElementConvertible {}
-public protocol SelectionMenuElement: BoundMenuElementConvertible {}
+public protocol SelectionMenuElement<Value>: BoundMenuElementConvertible {}
 public protocol TransportBarElement: MenuElementConvertible {}
