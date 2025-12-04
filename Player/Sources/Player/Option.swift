@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct Option<Body, Value /* from parent */> {
+public struct Option<Body, Value> {
     private let body: Body
 }
 
