@@ -9,6 +9,11 @@ struct ContentView: View {
 
     var body: some View {
         PlayerView(player: player)
+            .transportBar {
+                Action(title: "Circler", image: UIImage(systemName: "circle")!) {
+                    print("--> circle")
+                }
+            }
             .ignoresSafeArea()
             .onAppear(perform: player.play)
     }
