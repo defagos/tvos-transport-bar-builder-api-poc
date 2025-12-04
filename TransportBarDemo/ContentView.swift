@@ -15,13 +15,13 @@ struct ContentView: View {
         PlayerView(player: player)
             .transportBar {
                 Action(title: "Share", image: UIImage(systemName: "square.and.arrow.up")!) {
-                    print("--> Share")
+                    print("--> share")
                 }
-                Toggle(title: "Loop", image: UIImage(systemName: loopingImageName)!, isOn: $isLooping) {
-                    print("--> Loop")
+                Toggle(title: "Loop", image: UIImage(systemName: loopingImageName)!, isOn: $isLooping) { isOn in
+                    print("--> loop: \(isOn)")
                 }
-                Toggle(title: "Autoplay", image: UIImage(systemName: autoplayImageName)!, isOn: $isAutoplayEnabled) {
-                    print("--> Autoplay")
+                Toggle(title: "Autoplay", image: UIImage(systemName: autoplayImageName)!, isOn: $isAutoplayEnabled) { isOn in
+                    print("--> autoplay: \(isOn)")
                 }
                 Menu(title: "PlayStation", image: UIImage(systemName: "playstation.logo")!) {
                     Action(title: "Cross", image: UIImage(systemName: "xmark")!) {
@@ -30,11 +30,11 @@ struct ContentView: View {
                     Action(title: "Circle", image: UIImage(systemName: "circle")!) {
                         print("--> circle")
                     }
-                    Toggle(title: "Microphone", image: UIImage(systemName: "microphone")!, isOn: $isMicrophoneEnabled) {
-                        print("--> Microphone")
+                    Toggle(title: "Microphone", image: UIImage(systemName: "microphone")!, isOn: $isMicrophoneEnabled) { isOn in
+                        print("--> microphone: \(isOn)")
                     }
-                    Toggle(title: "Headphones", image: UIImage(systemName: "headphones")!, isOn: $areHeadphonesEnabled) {
-                        print("--> Headphones")
+                    Toggle(title: "Headphones", image: UIImage(systemName: "headphones")!, isOn: $areHeadphonesEnabled) { isOn in
+                        print("--> headphones: \(isOn)")
                     }
                 }
             }
