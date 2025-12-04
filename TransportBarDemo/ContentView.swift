@@ -36,6 +36,14 @@ struct ContentView: View {
                     Toggle(title: "Headphones", image: UIImage(systemName: "headphones")!, isOn: $areHeadphonesEnabled) { isOn in
                         print("--> headphones: \(isOn)")
                     }
+                    Menu(title: "RB", image: UIImage(systemName: "button.roundedbottom.horizontal")!) {
+                        Action(title: "R2", image: UIImage(systemName: "r2.button.roundedtop.horizontal")!) {
+                            print("--> R2")
+                        }
+                        Action(title: "R1", image: UIImage(systemName: "r1.button.roundedbottom.horizontal")!) {
+                            print("--> R1")
+                        }
+                    }
                 }
             }
             .ignoresSafeArea()
