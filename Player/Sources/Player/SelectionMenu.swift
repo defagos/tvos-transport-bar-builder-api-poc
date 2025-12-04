@@ -21,7 +21,7 @@ public struct SelectionMenuInMenu: MenuElementConvertible {
 }
 
 extension SelectionMenu: MenuElement where Body == SelectionMenuInMenu {
-    public init<Value>(title: String, image: UIImage? = nil, selection: Binding<Value>, @SelectionMenuContentBuilder<Value> content: () -> BoundMenuContent<Value>) {
+    public init<Value>(title: String, image: UIImage? = nil, selection: Binding<Value>, @SelectionMenuContentBuilder<Value> content: () -> SelectionMenuContent<Value>) {
         self.body = .init(title: title, image: image, children: content().toMenuElements(updating: selection))
     }
 }
@@ -37,7 +37,7 @@ public struct SelectionMenuInSection: MenuElementConvertible {
 }
 
 extension SelectionMenu: SectionElement where Body == SelectionMenuInSection {
-    public init<Value>(title: String, image: UIImage? = nil, selection: Binding<Value>, @SelectionMenuContentBuilder<Value> content: () -> BoundMenuContent<Value>) {
+    public init<Value>(title: String, image: UIImage? = nil, selection: Binding<Value>, @SelectionMenuContentBuilder<Value> content: () -> SelectionMenuContent<Value>) {
         self.body = .init(title: title, image: image, children: content().toMenuElements(updating: selection))
     }
 }
@@ -53,7 +53,7 @@ public struct SelectionMenuInTransportBar: MenuElementConvertible {
 }
 
 extension SelectionMenu: TransportBarElement where Body == SelectionMenuInTransportBar {
-    public init<Value>(title: String, image: UIImage, selection: Binding<Value>, @SelectionMenuContentBuilder<Value> content: () -> BoundMenuContent<Value>) {
+    public init<Value>(title: String, image: UIImage, selection: Binding<Value>, @SelectionMenuContentBuilder<Value> content: () -> SelectionMenuContent<Value>) {
         self.body = .init(title: title, image: image, children: content().toMenuElements(updating: selection))
     }
 }

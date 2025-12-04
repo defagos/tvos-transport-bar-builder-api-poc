@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct BoundMenuContent<Value> {
+public struct SelectionMenuContent<Value> {
     private let children: [SelectionMenuElementConvertible<Value>]
 
     init(children: [SelectionMenuElementConvertible<Value>] = []) {

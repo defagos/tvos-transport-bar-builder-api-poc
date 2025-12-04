@@ -2,7 +2,7 @@
 public enum SelectionMenuContentBuilder<Value> {
     public typealias Expression = SelectionMenuElement<Value>
     public typealias Component = [Expression]
-    public typealias Result = BoundMenuContent<Value>
+    public typealias Result = SelectionMenuContent<Value>
 
     public static func buildExpression(_ expression: Expression) -> Component {
         [expression]
