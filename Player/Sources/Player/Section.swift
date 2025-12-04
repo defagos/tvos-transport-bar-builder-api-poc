@@ -20,7 +20,7 @@ public struct SectionInMenu: MenuElementConvertible {
 }
 
 extension Section: MenuElement where Body == SectionInMenu {
-    public init(title: String? = nil, @SectionContentBuilder content: () -> MenuContent) {
+    public init(title: String? = nil, @MenuContentBuilder /* Use same builder as parent in which a section is inlined */ content: () -> MenuContent) {
         self.body = .init(title: title, children: content().toMenuElements())
     }
 }
