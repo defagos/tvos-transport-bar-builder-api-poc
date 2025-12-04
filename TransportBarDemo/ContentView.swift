@@ -2,6 +2,12 @@ import AVFoundation
 import Player
 import SwiftUI
 
+enum Quality {
+    case low
+    case medium
+    case high
+}
+
 struct ContentView: View {
     @State private var player = AVPlayer(
         url: URL(string: "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8")!
@@ -10,6 +16,7 @@ struct ContentView: View {
     @State private var isAutoplayEnabled = false
     @State private var isMicrophoneEnabled = false
     @State private var areHeadphonesEnabled = false
+    @State private var quality: Quality = .medium
 
     var body: some View {
         PlayerView(player: player)
@@ -43,6 +50,17 @@ struct ContentView: View {
                         Action(title: "R1", image: UIImage(systemName: "r1.button.roundedbottom.horizontal")!) {
                             print("--> R1")
                         }
+                    }
+                }
+                SelectionMenu(title: "Quality", image: UIImage(systemName: "person.and.background.dotted")!, selection: $quality) {
+                    Option(title: "Low", value: .low) { value in
+                        print("--> Select \(value)")
+                    }
+                    Option(title: "Medium", value: .medium) { value in
+                        print("--> Select \(value)")
+                    }
+                    Option(title: "High", value: .high) { value in
+                        print("--> Select \(value)")
                     }
                 }
             }

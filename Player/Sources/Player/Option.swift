@@ -14,23 +14,25 @@ public struct OptionInSelectionMenu<Value>: BoundMenuElementConvertible where Va
     let title: String
     let image: UIImage?
     let value: Value
-    let handler: () -> Void
+    let handler: (Value) -> Void
 
     private func state(selection: Binding<Value>) -> UIMenuElement.State {
         selection.wrappedValue == value ? .on : .off
     }
 
     public func toMenuElement(selection: Binding<Value>) -> UIMenuElement {
+        // TODO: If possible, should alter selection of other buttons, possibly via publisher and UIAction subclass/wrapper? Currently
+        //       we can see two entries marked when selecting another item. Would also prevent direct UIMenuElement creation
         UIAction(title: title, image: image, state: state(selection: selection)) { action in
             selection.wrappedValue = value
             action.state = state(selection: selection)
-            handler()
+            handler(value)
         }
     }
 }
 
 extension Option: SelectionMenuElement where Body == OptionInSelectionMenu<Value> {
-    public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping () -> Void = {}) {
+    public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping (Value) -> Void = { _ in }) {
         self.body = .init(title: title, image: image, value: value, handler: handler)
     }
 }
