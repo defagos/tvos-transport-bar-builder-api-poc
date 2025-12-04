@@ -15,12 +15,23 @@ struct ContentView: View {
                 Action(title: "Share", image: UIImage(systemName: "square.and.arrow.up")!) {
                     print("--> Share")
                 }
-                Toggle(title: "Loop", image: UIImage(systemName: "point.forward.to.point.capsulepath")!, isOn: $isLooping) {
+                Toggle(title: "Loop", image: UIImage(systemName: loopingImageName)!, isOn: $isLooping) {
                     print("--> Loop")
+                }
+                Toggle(title: "Autoplay", image: UIImage(systemName: autoplayImageName)!, isOn: $isAutoplayEnabled) {
+                    print("--> Autoplay")
                 }
             }
             .ignoresSafeArea()
             .onAppear(perform: player.play)
+    }
+
+    private var loopingImageName: String {
+        isLooping ? "point.forward.to.point.capsulepath.fill" : "point.forward.to.point.capsulepath"
+    }
+
+    private var autoplayImageName: String {
+        isAutoplayEnabled ? "play.circle.fill" : "play.circle"
     }
 }
 
