@@ -13,31 +13,31 @@ extension Menu: MenuElementConvertible where Body: MenuElementConvertible {
 public struct MenuInMenu: MenuElementConvertible {
     let title: String
     let image: UIImage?
-    let content: MenuContent
+    let children: [UIMenuElement]
 
     public func toMenuElement() -> UIMenuElement {
-        UIMenu(title: title, image: image, children: content.toMenuElements())
+        UIMenu(title: title, image: image, children: children)
     }
 }
 
 extension Menu: MenuElement where Body == MenuInMenu {
     public init(title: String, image: UIImage? = nil, @MenuContentBuilder content: () -> MenuContent) {
-        self.body = .init(title: title, image: image, content: content())
+        self.body = .init(title: title, image: image, children: content().toMenuElements())
     }
 }
 
 public struct MenuInTransportBar: MenuElementConvertible {
     let title: String
     let image: UIImage
-    let content: MenuContent
+    let children: [UIMenuElement]
 
     public func toMenuElement() -> UIMenuElement {
-        UIMenu(title: title, image: image, children: content.toMenuElements())
+        UIMenu(title: title, image: image, children: children)
     }
 }
 
 extension Menu: TransportBarElement where Body == MenuInTransportBar {
     public init(title: String, image: UIImage, @MenuContentBuilder content: () -> MenuContent) {
-        self.body = .init(title: title, image: image, content: content())
+        self.body = .init(title: title, image: image, children: content().toMenuElements())
     }
 }
