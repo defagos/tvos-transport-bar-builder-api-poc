@@ -1,7 +1,15 @@
 import SwiftUI
 
-protocol MenuElementConvertible<Value> {
+public protocol MenuElementConvertible {
+    func toMenuElement() -> UIMenuElement
+}
+
+public protocol BoundMenuElementConvertible<Value> {
     associatedtype Value
 
     func toMenuElement(selection: Binding<Value>) -> UIMenuElement
 }
+
+public protocol MenuElement: MenuElementConvertible {}
+public protocol SelectionMenuElement: BoundMenuElementConvertible {}
+public protocol TransportBarElement: MenuElementConvertible {}
