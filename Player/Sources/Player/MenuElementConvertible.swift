@@ -5,4 +5,5 @@ public protocol MenuElementConvertible {
 }
 
 public protocol MenuElement: MenuElementConvertible {}
+public protocol SectionElement: MenuElementConvertible {}
 public protocol TransportBarElement: MenuElementConvertible {}

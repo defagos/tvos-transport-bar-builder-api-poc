@@ -26,6 +26,22 @@ extension Action: MenuElement where Body == ActionInMenu {
     }
 }
 
+public struct ActionInSection: MenuElementConvertible {
+    let title: String
+    let image: UIImage?
+    let handler: () -> Void
+
+    public func toMenuElement() -> UIMenuElement {
+        UIAction(title: title, image: image) { _ in handler() }
+    }
+}
+
+extension Action: SectionElement where Body == ActionInSection {
+    public init(title: String, image: UIImage? = nil, handler: @escaping () -> Void) {
+        self.body = .init(title: title, image: image, handler: handler)
+    }
+}
+
 public struct ActionInTransportBar: MenuElementConvertible {
     let title: String
     let image: UIImage

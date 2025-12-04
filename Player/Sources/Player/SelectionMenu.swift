@@ -26,6 +26,22 @@ extension SelectionMenu: MenuElement where Body == SelectionMenuInMenu {
     }
 }
 
+public struct SelectionMenuInSection: MenuElementConvertible {
+    let title: String
+    let image: UIImage?
+    let children: [UIMenuElement]
+
+    public func toMenuElement() -> UIMenuElement {
+        UIMenu(title: title, image: image, options: [.singleSelection], children: children)
+    }
+}
+
+extension SelectionMenu: SectionElement where Body == SelectionMenuInSection {
+    public init<Value>(title: String, image: UIImage? = nil, selection: Binding<Value>, @SelectionMenuContentBuilder<Value> content: () -> BoundMenuContent<Value>) {
+        self.body = .init(title: title, image: image, children: content().toMenuElements(updating: selection))
+    }
+}
+
 public struct SelectionMenuInTransportBar: MenuElementConvertible {
     let title: String
     let image: UIImage

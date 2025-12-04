@@ -13,6 +13,12 @@ enum GameMode {
     case normal
 }
 
+enum SleepInterval {
+    case `10minutes`
+    case `30minutes`
+    case `60minutes`
+}
+
 struct ContentView: View {
     @State private var player = AVPlayer(
         url: URL(string: "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8")!
@@ -21,8 +27,14 @@ struct ContentView: View {
     @State private var isAutoplayEnabled = false
     @State private var isMicrophoneEnabled = false
     @State private var areHeadphonesEnabled = false
+
     @State private var quality: Quality = .medium
     @State private var gameMode: GameMode = .normal
+
+    @State private var isSleepModeEnabled = false
+    @State private var isEnergySavingModeEnabled = false
+
+    @State private var sleepInterval: SleepInterval = .`30minutes`
 
     var body: some View {
         PlayerView(player: player)
@@ -63,6 +75,51 @@ struct ContentView: View {
                         }
                         Option(title: "Normal", value: .normal) { value in
                             print("--> Select \(value)")
+                        }
+                    }
+                }
+                Menu(title: "Xbox", image: UIImage(systemName: "xbox.logo")!) {
+                    Section(title: "Front buttons") {
+                        Action(title: "X") {
+                            print("--> X")
+                        }
+                        Action(title: "Y") {
+                            print("--> X")
+                        }
+                        Action(title: "A") {
+                            print("--> A")
+                        }
+                        Action(title: "B") {
+                            print("--> B")
+                        }
+                    }
+                    Section(title: "Hardware") {
+                        Toggle(title: "Sleep mode", image: UIImage(systemName: "powersleep")!, isOn: $isSleepModeEnabled) { isOn in
+                            print("--> sleep mode: \(isOn)")
+                        }
+                        if isSleepModeEnabled {
+                            SelectionMenu(title: "Sleep after...", image: UIImage(systemName: "zzz")!, selection: $sleepInterval) {
+                                Option(title: "10 minutes", value: .`10minutes`) { value in
+                                    print("--> Select \(value)")
+                                }
+                                Option(title: "30 minutes", value: .`30minutes`) { value in
+                                    print("--> Select \(value)")
+                                }
+                                Option(title: "60 minutes", value: .`60minutes`) { value in
+                                    print("--> Select \(value)")
+                                }
+                            }
+                        }
+                        Toggle(title: "Energy-saving mode", image: UIImage(systemName: "battery.50percent")!, isOn: $isEnergySavingModeEnabled) { isOn in
+                            print("--> energy-saving mode: \(isOn)")
+                        }
+                        Menu(title: "Start") {
+                            Action(title: "Restart") {
+                                print("--> restart")
+                            }
+                            Action(title: "Shutdown") {
+                                print("--> shutdown")
+                            }
                         }
                     }
                 }
