@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct Toggle<Body, Value /* attached to the toggle directly */> {
+public struct Toggle<Body> {
     private let body: Body
 }
 
