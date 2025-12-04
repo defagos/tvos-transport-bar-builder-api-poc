@@ -4,13 +4,13 @@ public struct Option<Body, Value> {
     private let body: Body
 }
 
-extension Option: BoundMenuElementConvertible where Body: BoundMenuElementConvertible<Value> {
-    public func toMenuElement(selection: Binding<Value>) -> UIMenuElement {
-        body.toMenuElement(selection: selection)
+extension Option: SelectionMenuElementConvertible where Body: SelectionMenuElementConvertible<Value> {
+    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
+        body.toMenuElement(updating: selection)
     }
 }
 
-public struct OptionInSelectionMenu<Value>: BoundMenuElementConvertible where Value: Equatable {
+public struct OptionInSelectionMenu<Value>: SelectionMenuElementConvertible where Value: Equatable {
     let title: String
     let image: UIImage?
     let value: Value
@@ -20,7 +20,7 @@ public struct OptionInSelectionMenu<Value>: BoundMenuElementConvertible where Va
         selection.wrappedValue == value ? .on : .off
     }
 
-    public func toMenuElement(selection: Binding<Value>) -> UIMenuElement {
+    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
         // TODO: If possible, should alter selection of other buttons, possibly via publisher and UIAction subclass/wrapper? Currently
         //       we can see two entries marked when selecting another item. Would also prevent direct UIMenuElement creation
         UIAction(title: title, image: image, state: state(selection: selection)) { action in

@@ -22,6 +22,6 @@ public struct SelectionMenuInTransportBar: TransportBarElement {
 
 extension SelectionMenu: TransportBarElement where Body == SelectionMenuInTransportBar {
     public init<Value>(title: String, image: UIImage, selection: Binding<Value>, @SelectionMenuContentBuilder<Value> content: () -> BoundMenuContent<Value>) {
-        self.body = .init(title: title, image: image, children: content().toMenuElements(selection: selection))
+        self.body = .init(title: title, image: image, children: content().toMenuElements(updating: selection))
     }
 }

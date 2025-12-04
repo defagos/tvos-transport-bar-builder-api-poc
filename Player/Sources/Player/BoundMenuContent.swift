@@ -1,13 +1,13 @@
 import SwiftUI
 
 public struct BoundMenuContent<Value> {
-    private let children: [BoundMenuElementConvertible<Value>]
+    private let children: [SelectionMenuElementConvertible<Value>]
 
-    init(children: [BoundMenuElementConvertible<Value>] = []) {
+    init(children: [SelectionMenuElementConvertible<Value>] = []) {
         self.children = children
     }
 
-    func toMenuElements(selection: Binding<Value>) -> [UIMenuElement] {
-        children.map { $0.toMenuElement(selection: selection) }
+    func toMenuElements(updating selection: Binding<Value>) -> [UIMenuElement] {
+        children.map { $0.toMenuElement(updating: selection) }
     }
 }
