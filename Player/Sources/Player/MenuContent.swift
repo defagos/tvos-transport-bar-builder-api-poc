@@ -3,7 +3,7 @@ import UIKit
 public struct MenuContent {
     private let children: [MenuElementConvertible]
 
-    init(children: [MenuElementConvertible]) {
+    init(children: [MenuElementConvertible] = []) {
         self.children = children
     }
 
