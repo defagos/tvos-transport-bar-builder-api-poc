@@ -12,15 +12,15 @@ extension Section: MenuElementConvertible where Body: MenuElementConvertible {
 
 public struct SectionInMenu: MenuElementConvertible {
     let title: String?
-    let children: [UIMenuElement]
+    let content: MenuContent
 
     public func toMenuElement() -> UIMenuElement {
-        UIMenu(title: title ?? "", options: [.displayInline], children: children)
+        UIMenu(title: title ?? "", options: [.displayInline], children: content.toMenuElements())
     }
 }
 
 extension Section: MenuElement where Body == SectionInMenu {
     public init(title: String? = nil, @MenuContentBuilder /* Use same builder as parent in which a section is inlined */ content: () -> MenuContent) {
-        self.body = .init(title: title, children: content().toMenuElements())
+        self.body = .init(title: title, content: content())
     }
 }

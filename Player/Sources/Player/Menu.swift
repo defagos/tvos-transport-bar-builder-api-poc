@@ -13,47 +13,47 @@ extension Menu: MenuElementConvertible where Body: MenuElementConvertible {
 public struct MenuInMenu: MenuElementConvertible {
     let title: String
     let image: UIImage?
-    let children: [UIMenuElement]
+    let content: MenuContent
 
     public func toMenuElement() -> UIMenuElement {
-        UIMenu(title: title, image: image, children: children)
+        UIMenu(title: title, image: image, children: content.toMenuElements())
     }
 }
 
 extension Menu: MenuElement where Body == MenuInMenu {
     public init(title: String, image: UIImage? = nil, @MenuContentBuilder content: () -> MenuContent) {
-        self.body = .init(title: title, image: image, children: content().toMenuElements())
+        self.body = .init(title: title, image: image, content: content())
     }
 }
 
 public struct MenuInSelection: MenuElementConvertible {
     let title: String
     let image: UIImage?
-    let children: [UIMenuElement]
+    let content: MenuContent
 
     public func toMenuElement() -> UIMenuElement {
-        UIMenu(title: title, image: image, children: children)
+        UIMenu(title: title, image: image, children: content.toMenuElements())
     }
 }
 
 extension Menu: SectionElement where Body == MenuInSelection {
     public init(title: String, image: UIImage? = nil, @MenuContentBuilder content: () -> MenuContent) {
-        self.body = .init(title: title, image: image, children: content().toMenuElements())
+        self.body = .init(title: title, image: image, content: content())
     }
 }
 
 public struct MenuInTransportBar: MenuElementConvertible {
     let title: String
     let image: UIImage
-    let children: [UIMenuElement]
+    let content: MenuContent
 
     public func toMenuElement() -> UIMenuElement {
-        UIMenu(title: title, image: image, children: children)
+        UIMenu(title: title, image: image, children: content.toMenuElements())
     }
 }
 
 extension Menu: TransportBarElement where Body == MenuInTransportBar {
     public init(title: String, image: UIImage, @MenuContentBuilder content: () -> MenuContent) {
-        self.body = .init(title: title, image: image, children: content().toMenuElements())
+        self.body = .init(title: title, image: image, content: content())
     }
 }

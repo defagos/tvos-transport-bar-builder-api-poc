@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct SelectionMenu<Body> {
+public struct SelectionMenu<Body, Value> {
     private let body: Body
 }
 
@@ -10,50 +10,63 @@ extension SelectionMenu: MenuElementConvertible where Body: MenuElementConvertib
     }
 }
 
-public struct SelectionMenuInMenu: MenuElementConvertible {
+public struct SelectionMenuInMenu<Value>: MenuElementConvertible {
     let title: String
     let image: UIImage?
-    let children: [UIMenuElement]
+    let selection: Binding<Value>
+    let content: SelectionMenuContent<Value>
 
     public func toMenuElement() -> UIMenuElement {
-        UIMenu(title: title, image: image, options: [.singleSelection], children: children)
+        UIMenu(title: title, image: image, options: [.singleSelection], children: content.toMenuElements(updating: selection))
     }
 }
 
-extension SelectionMenu: MenuElement where Body == SelectionMenuInMenu {
-    public init<Value>(title: String, image: UIImage? = nil, selection: Binding<Value>, @SelectionMenuContentBuilder<Value> content: () -> SelectionMenuContent<Value>) {
-        self.body = .init(title: title, image: image, children: content().toMenuElements(updating: selection))
+extension SelectionMenu: MenuElement where Body == SelectionMenuInMenu<Value> {
+    public init(
+        title: String,
+        image: UIImage? = nil,
+        selection: Binding<Value>,
+        @SelectionMenuContentBuilder<Value> content: () -> SelectionMenuContent<Value>
+    ) {
+        self.body = .init(title: title, image: image, selection: selection, content: content())
     }
 }
 
-public struct SelectionMenuInSection: MenuElementConvertible {
+public struct SelectionMenuInSection<Value>: MenuElementConvertible {
     let title: String
     let image: UIImage?
-    let children: [UIMenuElement]
+    let selection: Binding<Value>
+    let content: SelectionMenuContent<Value>
 
     public func toMenuElement() -> UIMenuElement {
-        UIMenu(title: title, image: image, options: [.singleSelection], children: children)
+        UIMenu(title: title, image: image, options: [.singleSelection], children: content.toMenuElements(updating: selection))
     }
 }
 
-extension SelectionMenu: SectionElement where Body == SelectionMenuInSection {
-    public init<Value>(title: String, image: UIImage? = nil, selection: Binding<Value>, @SelectionMenuContentBuilder<Value> content: () -> SelectionMenuContent<Value>) {
-        self.body = .init(title: title, image: image, children: content().toMenuElements(updating: selection))
+extension SelectionMenu: SectionElement where Body == SelectionMenuInSection<Value> {
+    public init(
+        title: String,
+        image: UIImage? = nil,
+        selection: Binding<Value>,
+        @SelectionMenuContentBuilder<Value> content: () -> SelectionMenuContent<Value>
+    ) {
+        self.body = .init(title: title, image: image, selection: selection, content: content())
     }
 }
 
-public struct SelectionMenuInTransportBar: MenuElementConvertible {
+public struct SelectionMenuInTransportBar<Value>: MenuElementConvertible {
     let title: String
     let image: UIImage
-    let children: [UIMenuElement]
+    let selection: Binding<Value>
+    let content: SelectionMenuContent<Value>
 
     public func toMenuElement() -> UIMenuElement {
-        UIMenu(title: title, image: image, options: [.singleSelection], children: children)
+        UIMenu(title: title, image: image, options: [.singleSelection], children: content.toMenuElements(updating: selection))
     }
 }
 
-extension SelectionMenu: TransportBarElement where Body == SelectionMenuInTransportBar {
-    public init<Value>(title: String, image: UIImage, selection: Binding<Value>, @SelectionMenuContentBuilder<Value> content: () -> SelectionMenuContent<Value>) {
-        self.body = .init(title: title, image: image, children: content().toMenuElements(updating: selection))
+extension SelectionMenu: TransportBarElement where Body == SelectionMenuInTransportBar<Value> {
+    public init(title: String, image: UIImage, selection: Binding<Value>, @SelectionMenuContentBuilder<Value> content: () -> SelectionMenuContent<Value>) {
+        self.body = .init(title: title, image: image, selection: selection, content: content())
     }
 }
