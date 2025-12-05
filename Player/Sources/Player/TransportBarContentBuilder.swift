@@ -7,6 +7,10 @@ public enum TransportBarContentBuilder {
     public static func buildExpression(_ expression: Expression) -> Component {
         [expression]
     }
+    
+    public static func buildBlock() -> Component {
+        []
+    }
 
     public static func buildBlock(_ c0: Component) -> Component {
         c0
