@@ -11,7 +11,7 @@ public struct SectionInMenu: MenuBody {
     let content: SectionContent
 
     public func toMenuElement() -> UIMenuElement {
-        UIMenu(title: title ?? "", options: [.displayInline], children: content.toMenuElements())
+        UIMenu(title: title ?? "", identifier: .init(title ?? "untitled"), options: [.displayInline], children: content.toMenuElements())
     }
 }
 
@@ -37,7 +37,7 @@ public struct SectionInSelectionMenu<Value>: SelectionMenuBody {
     let content: SelectionSectionContent<Value>
 
     public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
-        UIMenu(title: title ?? "", options: [.displayInline], children: content.toMenuElements(updating: selection))
+        UIMenu(title: title ?? "", identifier: .init(title ?? "untitled"), options: [.displayInline], children: content.toMenuElements(updating: selection))
     }
 }
 

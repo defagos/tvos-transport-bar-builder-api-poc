@@ -13,7 +13,7 @@ public struct SelectionMenuInMenu<Value>: MenuBody {
     let content: SelectionMenuContent<Value>
 
     public func toMenuElement() -> UIMenuElement {
-        UIMenu(title: title, image: image, options: [.singleSelection], children: content.toMenuElements(updating: selection))
+        UIMenu(title: title, image: image, identifier: .init(title), options: [.singleSelection], children: content.toMenuElements(updating: selection))
     }
 }
 
@@ -37,7 +37,7 @@ public struct SelectionMenuInSection<Value>: SectionBody {
     let content: SelectionMenuContent<Value>
 
     public func toMenuElement() -> UIMenuElement {
-        UIMenu(title: title, image: image, options: [.singleSelection], children: content.toMenuElements(updating: selection))
+        UIMenu(title: title, image: image, identifier: .init(title), options: [.singleSelection], children: content.toMenuElements(updating: selection))
     }
 }
 
@@ -60,7 +60,7 @@ public struct SelectionMenuInSelectionMenu<Value>: SelectionMenuBody {
     let content: SelectionMenuContent<Value>
 
     public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
-        UIMenu(title: title, image: image, options: [.singleSelection], children: content.toMenuElements(updating: selection))
+        UIMenu(title: title, image: image, identifier: .init(title), options: [.singleSelection], children: content.toMenuElements(updating: selection))
     }
 }
 
@@ -93,7 +93,7 @@ public struct SelectionMenuInTransportBar<Value>: TransportBarBody {
     let content: SelectionMenuContent<Value>
 
     public func toMenuElement() -> UIMenuElement {
-        UIMenu(title: title, image: image, options: [.singleSelection], children: content.toMenuElements(updating: selection))
+        UIMenu(title: title, image: image, identifier: .init(title), options: [.singleSelection], children: content.toMenuElements(updating: selection))
     }
 }
 
