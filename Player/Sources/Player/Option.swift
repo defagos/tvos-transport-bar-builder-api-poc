@@ -46,7 +46,7 @@ extension Option: MenuElementConvertible where Body == MenuElementNotSupported {
 }
 
 extension Option: MenuElement, TransportBarElement where Body == MenuElementNotSupported {
-    @available(*, unavailable, message: "Options require a selection menu`")
+    @available(*, unavailable, message: "Options cannot be used here")
     public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping (Value) -> Void = { _ in }) {
         fatalError()
     }

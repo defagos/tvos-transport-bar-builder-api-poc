@@ -72,7 +72,7 @@ extension Action: SelectionMenuElementConvertible where Body == SelectionMenuEle
 }
 
 extension Action: SelectionMenuElement where Body == SelectionMenuElementNotSupported<Value> {
-    @available(*, unavailable, message: "Actions cannot appear in a selection menu")
+    @available(*, unavailable, message: "Actions are not supported here")
     public init(title: String, image: UIImage? = nil, handler: @escaping (Value) -> Void = { _ in }) {
         fatalError()
     }

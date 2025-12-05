@@ -48,15 +48,15 @@ extension Section: SelectionMenuElement where Body == SectionInSelectionMenu<Val
 
 // Non-supported embeddings below this line
 
-extension Section: SectionElement where Body == MenuElementNotSupported, Value == Never {
-    @available(*, unavailable, message: "Nested sections are not supported")
+extension Section: SectionElement, TransportBarElement where Body == MenuElementNotSupported, Value == Never {
+    @available(*, unavailable, message: "Sections are not supported here")
     public init(title: String? = nil, @SectionContentBuilder content: () -> MenuContent) {
         fatalError()
     }
 }
 
 extension Section: SelectionSectionElement where Body == SelectionMenuElementNotSupported<Value> {
-    @available(*, unavailable, message: "Nested sections are not supported")
+    @available(*, unavailable, message: "Sections are not supported here")
     public init(title: String? = nil, @SectionContentBuilder content: () -> MenuContent) {
         fatalError()
     }

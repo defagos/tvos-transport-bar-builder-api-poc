@@ -67,7 +67,7 @@ extension Menu: SelectionMenuElementConvertible where Body == SelectionMenuEleme
 }
 
 extension Menu: SelectionMenuElement where Body == SelectionMenuElementNotSupported<Value> {
-    @available(*, unavailable, message: "Menus cannot appear in a selection menu. Use `SelectionMenu` instead")
+    @available(*, unavailable, message: "Menus are not supported here")
     public init(title: String, image: UIImage? = nil, @MenuContentBuilder content: () -> MenuContent) {
         fatalError()
     }

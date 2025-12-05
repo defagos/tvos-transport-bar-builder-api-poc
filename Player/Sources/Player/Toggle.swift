@@ -95,7 +95,7 @@ extension Toggle: SelectionMenuElementConvertible where Body == SelectionMenuEle
 }
 
 extension Toggle: SelectionMenuElement where Body == SelectionMenuElementNotSupported<Value> {
-    @available(*, unavailable, message: "Toggles cannot appear in a selection menu")
+    @available(*, unavailable, message: "Toggles are not supported here")
     public init(title: String, image: UIImage? = nil, isOn: Binding<Bool>, handler: @escaping (Bool) -> Void = { _ in }) {
         fatalError()
     }
