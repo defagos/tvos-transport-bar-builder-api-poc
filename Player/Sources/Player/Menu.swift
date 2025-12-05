@@ -43,7 +43,7 @@ extension Menu: SectionElement where Body == MenuInSection, Value == Never {
 // MARK: `SelectionMenu` embedding
 
 extension Menu: SelectionMenuElement where Body == SelectionMenuBodyNotSupported<Value> {
-    @available(*, unavailable, message: "Menus are not supported in selection menu sections. Use `SelectionMenu` instead")
+    @available(*, unavailable, message: "Menus are not supported in selection menu sections. Use a `SelectionMenu` without `selection` parameter instead")
     public init(title: String, image: UIImage? = nil, @MenuContentBuilder content: () -> MenuContent) {
         fatalError()
     }
@@ -73,5 +73,10 @@ public struct MenuInTransportBar: TransportBarBody {
 extension Menu: TransportBarElement where Body == MenuInTransportBar, Value == Never {
     public init(title: String, image: UIImage, @MenuContentBuilder content: () -> MenuContent) {
         self.body = .init(title: title, image: image, content: content())
+    }
+
+    @available(*, unavailable, message: "Elements displayed at the transport bar root level require an associated image")
+    public init(title: String, @MenuContentBuilder content: () -> MenuContent) {
+        fatalError()
     }
 }

@@ -7,7 +7,7 @@ public struct Option<Body, Value> {
 // MARK: `Menu` embedding
 
 extension Option: MenuElement where Body == MenuBodyNotSupported {
-    @available(*, unavailable, message: "Options cannot be used in menus. Use `SelectionMenu` instead")
+    @available(*, unavailable, message: "Options cannot be used in menus. Use a `SelectionMenu` instead")
     public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping (Value) -> Void = { _ in }) {
         fatalError()
     }
@@ -83,7 +83,7 @@ extension Option: SelectionSectionElement where Body == OptionInSelectionSection
 // MARK: `TransportBar` embedding
 
 extension Option: TransportBarElement where Body == TransportBarBodyNotSupported {
-    @available(*, unavailable, message: "Options cannot be displayed at the transport bar level")
+    @available(*, unavailable, message: "Options cannot be displayed at the transport bar root level")
     public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping (Value) -> Void = { _ in }) {
         fatalError()
     }

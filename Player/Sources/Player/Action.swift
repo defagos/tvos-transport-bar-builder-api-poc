@@ -75,7 +75,7 @@ extension Action: TransportBarElement where Body == ActionInTransportBar, Value 
         self.body = .init(title: title, image: image, handler: handler)
     }
 
-    @available(*, unavailable, message: "Elements displayed at the transport bar level require an associated image")
+    @available(*, unavailable, message: "Elements displayed at the transport bar root level require an associated image")
     public init(title: String, handler: @escaping () -> Void) {
         fatalError()
     }

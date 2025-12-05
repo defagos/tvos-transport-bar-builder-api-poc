@@ -101,4 +101,16 @@ extension SelectionMenu: TransportBarElement where Body == SelectionMenuInTransp
     public init(title: String, image: UIImage, selection: Binding<Value>, @SelectionMenuContentBuilder<Value> content: () -> SelectionMenuContent<Value>) {
         self.body = .init(title: title, image: image, selection: selection, content: content())
     }
+
+    @available(*, unavailable, message: "Elements displayed at the transport bar root level require an associated image")
+    public init(title: String, selection: Binding<Value>, @SelectionMenuContentBuilder<Value> content: () -> SelectionMenuContent<Value>) {
+        fatalError()
+    }
+}
+
+extension SelectionMenu where Value == Never {
+    @available(*, unavailable, message: "Selection menu without a parent. Add a `selection` parameter")
+    public init(title: String, image: UIImage? = nil, @SelectionMenuContentBuilder<Never> content: () -> SelectionMenuContent<Never>) {
+        fatalError()
+    }
 }

@@ -59,7 +59,7 @@ extension Section: SelectionSectionElement where Body == SelectionSectionBodyNot
 // MARK: `TransportBar` embedding
 
 extension Section: TransportBarElement where Body == TransportBarBodyNotSupported, Value == Never {
-    @available(*, unavailable, message: "Sections cannot be displayed at the transport bar level")
+    @available(*, unavailable, message: "Sections cannot be displayed at the transport bar root level")
     public init(title: String? = nil, @SectionContentBuilder content: () -> SectionContent) {
         fatalError()
     }
