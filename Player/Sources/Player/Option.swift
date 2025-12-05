@@ -31,7 +31,7 @@ public struct OptionInSelectionMenu<Value>: SelectionMenuElementConvertible wher
     }
 }
 
-extension Option: SelectionMenuElement where Body == OptionInSelectionMenu<Value> {
+extension Option: SelectionMenuElement, SelectionSectionElement where Body == OptionInSelectionMenu<Value> {
     public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping (Value) -> Void = { _ in }) {
         self.body = .init(title: title, image: image, value: value, handler: handler)
     }

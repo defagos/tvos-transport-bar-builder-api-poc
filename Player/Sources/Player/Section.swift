@@ -20,7 +20,7 @@ public struct SectionInMenu: MenuElementConvertible {
 }
 
 extension Section: MenuElement where Body == SectionInMenu, Value == Never {
-    public init(title: String? = nil, @MenuContentBuilder /* Use same builder as parent in which a section is inlined */ content: () -> MenuContent) {
+    public init(title: String? = nil, @SectionContentBuilder content: () -> MenuContent) {
         self.body = .init(title: title, content: content())
     }
 }
@@ -41,7 +41,23 @@ public struct SectionInSelectionMenu<Value>: SelectionMenuElementConvertible {
 }
 
 extension Section: SelectionMenuElement where Body == SectionInSelectionMenu<Value> {
-    public init(title: String? = nil, @SelectionMenuContentBuilder<Value> content: () -> SelectionMenuContent<Value>) {
+    public init(title: String? = nil, @SelectionSectionContentBuilder<Value> content: () -> SelectionMenuContent<Value>) {
         self.body = .init(title: title, content: content())
+    }
+}
+
+// Non-supported embeddings below this line
+
+extension Section: SectionElement where Body == MenuElementNotSupported, Value == Never {
+    @available(*, unavailable, message: "Nested sections are not supported")
+    public init(title: String? = nil, @SectionContentBuilder content: () -> MenuContent) {
+        fatalError()
+    }
+}
+
+extension Section: SelectionSectionElement where Body == SelectionMenuElementNotSupported<Value> {
+    @available(*, unavailable, message: "Nested sections are not supported")
+    public init(title: String? = nil, @SectionContentBuilder content: () -> MenuContent) {
+        fatalError()
     }
 }
