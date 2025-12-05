@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct Action<Body> {
+public struct Action<Body, Value> {
     private let body: Body
 }
 
@@ -20,7 +20,7 @@ public struct ActionInMenu: MenuElementConvertible {
     }
 }
 
-extension Action: MenuElement where Body == ActionInMenu {
+extension Action: MenuElement where Body == ActionInMenu, Value == Never {
     public init(title: String, image: UIImage? = nil, handler: @escaping () -> Void) {
         self.body = .init(title: title, image: image, handler: handler)
     }
@@ -36,7 +36,7 @@ public struct ActionInSection: MenuElementConvertible {
     }
 }
 
-extension Action: SectionElement where Body == ActionInSection {
+extension Action: SectionElement where Body == ActionInSection, Value == Never {
     public init(title: String, image: UIImage? = nil, handler: @escaping () -> Void) {
         self.body = .init(title: title, image: image, handler: handler)
     }
@@ -52,8 +52,28 @@ public struct ActionInTransportBar: MenuElementConvertible {
     }
 }
 
-extension Action: TransportBarElement where Body == ActionInTransportBar {
+extension Action: TransportBarElement where Body == ActionInTransportBar, Value == Never {
     public init(title: String, image: UIImage, handler: @escaping () -> Void) {
         self.body = .init(title: title, image: image, handler: handler)
+    }
+
+    @available(*, unavailable, message: "Elements displayed at the transport bar level require an associated image")
+    public init(title: String, handler: @escaping () -> Void) {
+        fatalError()
+    }
+}
+
+// Non-supported embeddings below this line
+
+extension Action: SelectionMenuElementConvertible where Body == SelectionMenuElementNotSupported<Value> {
+    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
+        fatalError()
+    }
+}
+
+extension Action: SelectionMenuElement where Body == SelectionMenuElementNotSupported<Value> {
+    @available(*, unavailable, message: "Actions cannot appear in a selection menu")
+    public init(title: String, image: UIImage? = nil, handler: @escaping (Value) -> Void = { _ in }) {
+        fatalError()
     }
 }

@@ -4,7 +4,7 @@ public struct Section<Body, Value> {
     private let body: Body
 }
 
-extension Section: MenuElementConvertible where Body: MenuElementConvertible, Value == Never {
+extension Section: MenuElementConvertible where Body: MenuElementConvertible {
     public func toMenuElement() -> UIMenuElement {
         body.toMenuElement()
     }

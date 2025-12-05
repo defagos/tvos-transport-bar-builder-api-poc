@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct Toggle<Body> {
+public struct Toggle<Body, Value> {
     private let body: Body
 }
 
@@ -29,7 +29,7 @@ public struct ToggleInMenu: MenuElementConvertible {
     }
 }
 
-extension Toggle: MenuElement where Body == ToggleInMenu {
+extension Toggle: MenuElement where Body == ToggleInMenu, Value == Never {
     public init(title: String, image: UIImage? = nil, isOn: Binding<Bool>, handler: @escaping (Bool) -> Void = { _ in }) {
         self.body = .init(title: title, image: image, isOn: isOn, handler: handler)
     }
@@ -52,7 +52,7 @@ public struct ToggleInSection: MenuElementConvertible {
     }
 }
 
-extension Toggle: SectionElement where Body == ToggleInSection {
+extension Toggle: SectionElement where Body == ToggleInSection, Value == Never {
     public init(title: String, image: UIImage? = nil, isOn: Binding<Bool>, handler: @escaping (Bool) -> Void = { _ in }) {
         self.body = .init(title: title, image: image, isOn: isOn, handler: handler)
     }
@@ -75,8 +75,28 @@ public struct ToggleInTransportBar: MenuElementConvertible {
     }
 }
 
-extension Toggle: TransportBarElement where Body == ToggleInTransportBar {
+extension Toggle: TransportBarElement where Body == ToggleInTransportBar, Value == Never {
     public init(title: String, image: UIImage, isOn: Binding<Bool>, handler: @escaping (Bool) -> Void = { _ in }) {
         self.body = .init(title: title, image: image, isOn: isOn, handler: handler)
+    }
+
+    @available(*, unavailable, message: "Elements displayed at the transport bar level require an associated image")
+    public init(title: String, isOn: Binding<Bool>, handler: @escaping (Bool) -> Void = { _ in }) {
+        fatalError()
+    }
+}
+
+// Non-supported embeddings below this line
+
+extension Toggle: SelectionMenuElementConvertible where Body == SelectionMenuElementNotSupported<Value> {
+    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
+        fatalError()
+    }
+}
+
+extension Toggle: SelectionMenuElement where Body == SelectionMenuElementNotSupported<Value> {
+    @available(*, unavailable, message: "Toggles cannot appear in a selection menu")
+    public init(title: String, image: UIImage? = nil, isOn: Binding<Bool>, handler: @escaping (Bool) -> Void = { _ in }) {
+        fatalError()
     }
 }

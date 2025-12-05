@@ -1,6 +1,6 @@
-import UIKit
+import SwiftUI
 
-public struct Menu<Body> {
+public struct Menu<Body, Value> {
     private let body: Body
 }
 
@@ -20,7 +20,7 @@ public struct MenuInMenu: MenuElementConvertible {
     }
 }
 
-extension Menu: MenuElement where Body == MenuInMenu {
+extension Menu: MenuElement where Body == MenuInMenu, Value == Never {
     public init(title: String, image: UIImage? = nil, @MenuContentBuilder content: () -> MenuContent) {
         self.body = .init(title: title, image: image, content: content())
     }
@@ -36,7 +36,7 @@ public struct MenuInSelection: MenuElementConvertible {
     }
 }
 
-extension Menu: SectionElement where Body == MenuInSelection {
+extension Menu: SectionElement where Body == MenuInSelection, Value == Never {
     public init(title: String, image: UIImage? = nil, @MenuContentBuilder content: () -> MenuContent) {
         self.body = .init(title: title, image: image, content: content())
     }
@@ -52,8 +52,23 @@ public struct MenuInTransportBar: MenuElementConvertible {
     }
 }
 
-extension Menu: TransportBarElement where Body == MenuInTransportBar {
+extension Menu: TransportBarElement where Body == MenuInTransportBar, Value == Never {
     public init(title: String, image: UIImage, @MenuContentBuilder content: () -> MenuContent) {
         self.body = .init(title: title, image: image, content: content())
+    }
+}
+
+// Non-supported embeddings below this line
+
+extension Menu: SelectionMenuElementConvertible where Body == SelectionMenuElementNotSupported<Value> {
+    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
+        fatalError()
+    }
+}
+
+extension Menu: SelectionMenuElement where Body == SelectionMenuElementNotSupported<Value> {
+    @available(*, unavailable, message: "Menus cannot appear in a selection menu. Use `SelectionMenu` instead")
+    public init(title: String, image: UIImage? = nil, @MenuContentBuilder content: () -> MenuContent) {
+        fatalError()
     }
 }

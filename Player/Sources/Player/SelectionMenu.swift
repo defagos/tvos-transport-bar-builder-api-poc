@@ -71,12 +71,13 @@ extension SelectionMenu: SelectionMenuElementConvertible where Body == Selection
 }
 
 extension SelectionMenu: SelectionMenuElement where Body == SelectionMenuInSelectionMenu<Value> {
-    public init(
-        title: String,
-        image: UIImage? = nil,
-        @SelectionMenuContentBuilder<Value> content: () -> SelectionMenuContent<Value>
-    ) {
+    public init(title: String, image: UIImage? = nil, @SelectionMenuContentBuilder<Value> content: () -> SelectionMenuContent<Value>) {
         self.body = .init(title: title, image: image, content: content())
+    }
+
+    @available(*, unavailable, message: "Nested selection menus with different selections are not supported. Remove the `selection` parameter")
+    public init(title: String, image: UIImage? = nil, selection: Binding<Value>, @SelectionMenuContentBuilder<Value> content: () -> SelectionMenuContent<Value>) {
+        fatalError()
     }
 }
 

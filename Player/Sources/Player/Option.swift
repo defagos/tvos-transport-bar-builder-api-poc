@@ -36,3 +36,18 @@ extension Option: SelectionMenuElement where Body == OptionInSelectionMenu<Value
         self.body = .init(title: title, image: image, value: value, handler: handler)
     }
 }
+
+// Non-supported embeddings below this line
+
+extension Option: MenuElementConvertible where Body == MenuElementNotSupported {
+    public func toMenuElement() -> UIMenuElement {
+        fatalError()
+    }
+}
+
+extension Option: MenuElement, TransportBarElement where Body == MenuElementNotSupported {
+    @available(*, unavailable, message: "Options require a selection menu`")
+    public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping (Value) -> Void = { _ in }) {
+        fatalError()
+    }
+}
