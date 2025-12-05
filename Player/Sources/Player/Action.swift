@@ -12,7 +12,7 @@ public struct ActionInMenu: MenuBody {
     let handler: () -> Void
 
     public func toMenuElement() -> UIMenuElement {
-        UIAction(title: title, image: image) { _ in handler() }
+        UIAction(title: title, image: image, identifier: .init(title)) { _ in handler() }
     }
 }
 
@@ -30,7 +30,7 @@ public struct ActionInSection: SectionBody {
     let handler: () -> Void
 
     public func toMenuElement() -> UIMenuElement {
-        UIAction(title: title, image: image) { _ in handler() }
+        UIAction(title: title, image: image, identifier: .init(title)) { _ in handler() }
     }
 }
 
@@ -66,7 +66,7 @@ public struct ActionInTransportBar: TransportBarBody {
     let handler: () -> Void
 
     public func toMenuElement() -> UIMenuElement {
-        UIAction(title: title, image: image) { _ in handler() }
+        UIAction(title: title, image: image, identifier: .init(title)) { _ in handler() }
     }
 }
 
