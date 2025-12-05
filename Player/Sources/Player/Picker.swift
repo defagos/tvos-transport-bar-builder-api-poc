@@ -13,7 +13,7 @@ public struct PickerInMenu<Value>: MenuBody {
     let content: PickerContent<Value>
 
     public func toMenuElement() -> UIMenuElement {
-        UIMenu(title: title, image: image, identifier: .init(title), options: [.singleSelection], children: content.toMenuElements(updating: selection))
+        UIMenu(title: title, image: image, identifier: .init(title), options: .singleSelection, children: content.toMenuElements(updating: selection))
     }
 }
 
@@ -37,7 +37,7 @@ public struct PickerInSection<Value>: SectionBody {
     let content: PickerContent<Value>
 
     public func toMenuElement() -> UIMenuElement {
-        UIMenu(title: title, image: image, identifier: .init(title), options: [.singleSelection], children: content.toMenuElements(updating: selection))
+        UIMenu(title: title, image: image, identifier: .init(title), options: .singleSelection, children: content.toMenuElements(updating: selection))
     }
 }
 
@@ -60,7 +60,7 @@ public struct PickerInPicker<Value>: PickerBody {
     let content: PickerContent<Value>
 
     public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
-        UIMenu(title: title, image: image, identifier: .init(title), options: [.singleSelection], children: content.toMenuElements(updating: selection))
+        UIMenu(title: title, image: image, identifier: .init(title), options: .singleSelection, children: content.toMenuElements(updating: selection))
     }
 }
 
@@ -93,7 +93,7 @@ public struct PickerInTransportBar<Value>: TransportBarBody {
     let content: PickerContent<Value>
 
     public func toMenuElement() -> UIMenuElement {
-        UIMenu(title: title, image: image, identifier: .init(title), options: [.singleSelection], children: content.toMenuElements(updating: selection))
+        UIMenu(title: title, image: image, identifier: .init(title), options: .singleSelection, children: content.toMenuElements(updating: selection))
     }
 }
 
