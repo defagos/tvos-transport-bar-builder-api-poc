@@ -1,8 +1,8 @@
 @resultBuilder
-public enum SelectionSectionContentBuilder<Value> {
-    public typealias Expression = SelectionSectionElement<Value>
+public enum PickerContentBuilder<Value> {
+    public typealias Expression = PickerElement<Value>
     public typealias Component = [Expression]
-    public typealias Result = SelectionSectionContent<Value>
+    public typealias Result = PickerContent<Value>
 
     public static func buildExpression(_ expression: Expression) -> Component {
         [expression]

@@ -40,19 +40,19 @@ extension Menu: SectionElement where Body == MenuInSection, Value == Never {
     }
 }
 
-// MARK: `SelectionMenu` embedding
+// MARK: `Picker` embedding
 
-extension Menu: SelectionMenuElement where Body == SelectionMenuBodyNotSupported<Value> {
-    @available(*, unavailable, message: "Menus are not supported in selection menu sections. Use a `SelectionMenu` without `selection` parameter instead")
+extension Menu: PickerElement where Body == PickerBodyNotSupported<Value> {
+    @available(*, unavailable, message: "Menus are not supported in picker sections. Use a `Picker` without `selection` parameter instead")
     public init(title: String, image: UIImage? = nil, @MenuContentBuilder content: () -> MenuContent) {
         fatalError()
     }
 }
 
-// MARK: `SelectionSection` embedding
+// MARK: `PickerSection` embedding
 
-extension Menu: SelectionSectionElement where Body == SelectionSectionBodyNotSupported<Value> {
-    @available(*, unavailable, message: "Menus are not supported in selection menu sections")
+extension Menu: PickerSectionElement where Body == PickerSectionBodyNotSupported<Value> {
+    @available(*, unavailable, message: "Menus are not supported in picker sections")
     public init(title: String, image: UIImage? = nil, @MenuContentBuilder content: () -> MenuContent) {
         fatalError()
     }

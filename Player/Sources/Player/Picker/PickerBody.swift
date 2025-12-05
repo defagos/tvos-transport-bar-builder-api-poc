@@ -1,12 +1,12 @@
 import SwiftUI
 
-public protocol SelectionSectionBody<Value> {
+public protocol PickerBody<Value> {
     associatedtype Value
 
     func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement
 }
 
-public struct SelectionSectionBodyNotSupported<Value>: SelectionSectionBody {
+public struct PickerBodyNotSupported<Value>: PickerBody {
     public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
         fatalError()
     }

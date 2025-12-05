@@ -73,7 +73,7 @@ struct ContentView: View {
                             print("--> R1")
                         }
                     }
-                    SelectionMenu(title: "Game mode", image: UIImage(systemName: "gamecontroller")!, selection: $gameMode) {
+                    Picker(title: "Game mode", image: UIImage(systemName: "gamecontroller")!, selection: $gameMode) {
                         Option(title: "Low power", value: .lowPower) { value in
                             print("--> Select \(value)")
                         }
@@ -102,7 +102,7 @@ struct ContentView: View {
                             print("--> sleep mode: \(isOn)")
                         }
                         if isSleepModeEnabled {
-                            SelectionMenu(title: "Sleep after...", image: UIImage(systemName: "zzz")!, selection: $sleepInterval) {
+                            Picker(title: "Sleep after...", image: UIImage(systemName: "zzz")!, selection: $sleepInterval) {
                                 Option(title: "10 minutes", value: .`10minutes`) { value in
                                     print("--> Select \(value)")
                                 }
@@ -127,7 +127,7 @@ struct ContentView: View {
                         }
                     }
                 }
-                SelectionMenu(title: "Quality", image: UIImage(systemName: "person.and.background.dotted")!, selection: $quality) {
+                Picker(title: "Quality", image: UIImage(systemName: "person.and.background.dotted")!, selection: $quality) {
                     Option(title: "Low", value: .low) { value in
                         print("--> Select \(value)")
                     }
@@ -145,7 +145,7 @@ struct ContentView: View {
                             print("--> Select \(value)")
                         }
                     }
-                    SelectionMenu(title: "Poor networks") {
+                    Picker(title: "Poor networks") {
                         Option(title: "Very Low", value: .veryLow) { value in
                             print("--> Select \(value)")
                         }

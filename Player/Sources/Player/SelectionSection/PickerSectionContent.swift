@@ -1,9 +1,9 @@
 import SwiftUI
 
-public struct SelectionMenuContent<Value> {
-    private let children: [SelectionMenuElement<Value>]
+public struct PickerSectionContent<Value> {
+    private let children: [PickerSectionElement<Value>]
 
-    init(children: [SelectionMenuElement<Value>] = []) {
+    init(children: [PickerSectionElement<Value>] = []) {
         self.children = children
     }
 

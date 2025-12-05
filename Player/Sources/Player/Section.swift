@@ -30,26 +30,26 @@ extension Section: SectionElement where Body == SectionBodyNotSupported, Value =
     }
 }
 
-// MARK: `SelectionMenu` embedding
+// MARK: `Picker` embedding
 
-public struct SectionInSelectionMenu<Value>: SelectionMenuBody {
+public struct SectionInPicker<Value>: PickerBody {
     let title: String?
-    let content: SelectionSectionContent<Value>
+    let content: PickerSectionContent<Value>
 
     public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
         UIMenu(title: title ?? "", identifier: .init(title ?? "untitled"), options: [.displayInline], children: content.toMenuElements(updating: selection))
     }
 }
 
-extension Section: SelectionMenuElement where Body == SectionInSelectionMenu<Value> {
-    public init(title: String? = nil, @SelectionSectionContentBuilder<Value> content: () -> SelectionSectionContent<Value>) {
+extension Section: PickerElement where Body == SectionInPicker<Value> {
+    public init(title: String? = nil, @PickerSectionContentBuilder<Value> content: () -> PickerSectionContent<Value>) {
         self.body = .init(title: title, content: content())
     }
 }
 
-// MARK: `SelectionSection` embedding
+// MARK: `PickerSection` embedding
 
-extension Section: SelectionSectionElement where Body == SelectionSectionBodyNotSupported<Value> {
+extension Section: PickerSectionElement where Body == PickerSectionBodyNotSupported<Value> {
     @available(*, unavailable, message: "Nested sections are not supported")
     public init(title: String? = nil, @SectionContentBuilder content: () -> SectionContent) {
         fatalError()

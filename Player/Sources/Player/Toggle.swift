@@ -56,10 +56,10 @@ extension Toggle: SectionElement where Body == ToggleInSection, Value == Never {
     }
 }
 
-// MARK: `SelectionMenu` embedding
+// MARK: `Picker` embedding
 
-extension Toggle: SelectionMenuElement where Body == SelectionMenuBodyNotSupported<Value> {
-    @available(*, unavailable, message: "Toggles are not supported in selection menus")
+extension Toggle: PickerElement where Body == PickerBodyNotSupported<Value> {
+    @available(*, unavailable, message: "Toggles are not supported in pickers")
     public init(title: String, image: UIImage? = nil, isOn: Binding<Bool>, handler: @escaping (Bool) -> Void = { _ in }) {
         fatalError()
     }
@@ -69,10 +69,10 @@ extension Toggle: SelectionMenuElement where Body == SelectionMenuBodyNotSupport
     }
 }
 
-// MARK: `SelectionSection` embedding
+// MARK: `PickerSection` embedding
 
-extension Toggle: SelectionSectionElement where Body == SelectionSectionBodyNotSupported<Value> {
-    @available(*, unavailable, message: "Toggles are not supported in selection menu sections")
+extension Toggle: PickerSectionElement where Body == PickerSectionBodyNotSupported<Value> {
+    @available(*, unavailable, message: "Toggles are not supported in picker sections")
     public init(title: String, image: UIImage? = nil, isOn: Binding<Bool>, handler: @escaping (Bool) -> Void = { _ in }) {
         fatalError()
     }

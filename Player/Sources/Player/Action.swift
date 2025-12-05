@@ -40,19 +40,19 @@ extension Action: SectionElement where Body == ActionInSection, Value == Never {
     }
 }
 
-// MARK: `SelectionMenu` embedding
+// MARK: `Picker` embedding
 
-extension Action: SelectionMenuElement where Body == SelectionMenuBodyNotSupported<Value> {
-    @available(*, unavailable, message: "Actions are not supported in selection menus")
+extension Action: PickerElement where Body == PickerBodyNotSupported<Value> {
+    @available(*, unavailable, message: "Actions are not supported in pickers")
     public init(title: String, image: UIImage? = nil, handler: @escaping (Value) -> Void = { _ in }) {
         fatalError()
     }
 }
 
-// MARK: `SelectionSection` embedding
+// MARK: `PickerSection` embedding
 
-extension Action: SelectionSectionElement where Body == SelectionSectionBodyNotSupported<Value> {
-    @available(*, unavailable, message: "Actions are not supported in selection menu sections")
+extension Action: PickerSectionElement where Body == PickerSectionBodyNotSupported<Value> {
+    @available(*, unavailable, message: "Actions are not supported in picker sections")
     public init(title: String, image: UIImage? = nil, handler: @escaping (Value) -> Void = { _ in }) {
         fatalError()
     }

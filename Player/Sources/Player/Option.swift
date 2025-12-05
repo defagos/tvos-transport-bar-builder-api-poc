@@ -7,7 +7,7 @@ public struct Option<Body, Value> {
 // MARK: `Menu` embedding
 
 extension Option: MenuElement where Body == MenuBodyNotSupported {
-    @available(*, unavailable, message: "Options cannot be used in menus. Use a `SelectionMenu` instead")
+    @available(*, unavailable, message: "Options cannot be used in menus. Use a `Picker` instead")
     public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping (Value) -> Void = { _ in }) {
         fatalError()
     }
@@ -16,15 +16,15 @@ extension Option: MenuElement where Body == MenuBodyNotSupported {
 // MARK: `Section` embedding
 
 extension Option: SectionElement where Body == SectionBodyNotSupported {
-    @available(*, unavailable, message: "Options cannot be used in sections not belonging to a `SelectionMenu`")
+    @available(*, unavailable, message: "Options cannot be used in sections not belonging to a `Picker`")
     public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping (Value) -> Void = { _ in }) {
         fatalError()
     }
 }
 
-// MARK: `SelectionMenu` embedding
+// MARK: `Picker` embedding
 
-public struct OptionInSelectionMenu<Value>: SelectionMenuBody where Value: Equatable {
+public struct OptionInPicker<Value>: PickerBody where Value: Equatable {
     let title: String
     let image: UIImage?
     let value: Value
@@ -43,15 +43,15 @@ public struct OptionInSelectionMenu<Value>: SelectionMenuBody where Value: Equat
     }
 }
 
-extension Option: SelectionMenuElement where Body == OptionInSelectionMenu<Value> {
+extension Option: PickerElement where Body == OptionInPicker<Value> {
     public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping (Value) -> Void = { _ in }) {
         self.body = .init(title: title, image: image, value: value, handler: handler)
     }
 }
 
-// MARK: `SelectionSection` embedding
+// MARK: `PickerSection` embedding
 
-public struct OptionInSelectionSection<Value>: SelectionSectionBody where Value: Equatable {
+public struct OptionInPickerSection<Value>: PickerSectionBody where Value: Equatable {
     let title: String
     let image: UIImage?
     let value: Value
@@ -72,7 +72,7 @@ public struct OptionInSelectionSection<Value>: SelectionSectionBody where Value:
     }
 }
 
-extension Option: SelectionSectionElement where Body == OptionInSelectionSection<Value> {
+extension Option: PickerSectionElement where Body == OptionInPickerSection<Value> {
     public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping (Value) -> Void = { _ in }) {
         self.body = .init(title: title, image: image, value: value, handler: handler)
     }

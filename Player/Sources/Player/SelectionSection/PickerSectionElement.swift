@@ -1,13 +1,13 @@
 import SwiftUI
 
-public protocol SelectionMenuElement<Value> {
-    associatedtype Body: SelectionMenuBody<Value>
+public protocol PickerSectionElement<Value> {
+    associatedtype Body: PickerSectionBody<Value>
     associatedtype Value
 
     var body: Body { get }
 }
 
-extension SelectionMenuElement {
+extension PickerSectionElement {
     func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
         body.toMenuElement(updating: selection)
     }
