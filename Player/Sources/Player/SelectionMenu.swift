@@ -1,10 +1,10 @@
 import SwiftUI
 
 public struct SelectionMenu<Body, Value> {
-    private let body: Body
+    public let body: Body
 }
 
-public struct SelectionMenuInMenu<Value>: MenuElement {
+public struct SelectionMenuInMenu<Value>: MenuBody {
     let title: String
     let image: UIImage?
     let selection: Binding<Value>
@@ -24,13 +24,9 @@ extension SelectionMenu: MenuElement where Body == SelectionMenuInMenu<Value> {
     ) {
         self.body = .init(title: title, image: image, selection: selection, content: content())
     }
-
-    public func toMenuElement() -> UIMenuElement {
-        body.toMenuElement()
-    }
 }
 
-public struct SelectionMenuInSection<Value>: SectionElement {
+public struct SelectionMenuInSection<Value>: SectionBody {
     let title: String
     let image: UIImage?
     let selection: Binding<Value>
@@ -50,13 +46,9 @@ extension SelectionMenu: SectionElement where Body == SelectionMenuInSection<Val
     ) {
         self.body = .init(title: title, image: image, selection: selection, content: content())
     }
-
-    public func toMenuElement() -> UIMenuElement {
-        body.toMenuElement()
-    }
 }
 
-public struct SelectionMenuInSelectionMenu<Value>: SelectionMenuElement {
+public struct SelectionMenuInSelectionMenu<Value>: SelectionMenuBody {
     let title: String
     let image: UIImage?
     let content: SelectionMenuContent<Value>
@@ -75,13 +67,9 @@ extension SelectionMenu: SelectionMenuElement where Body == SelectionMenuInSelec
     public init(title: String, image: UIImage? = nil, selection: Binding<Value>, @SelectionMenuContentBuilder<Value> content: () -> SelectionMenuContent<Value>) {
         fatalError()
     }
-
-    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
-        body.toMenuElement(updating: selection)
-    }
 }
 
-public struct SelectionMenuInTransportBar<Value>: TransportBarElement {
+public struct SelectionMenuInTransportBar<Value>: TransportBarBody {
     let title: String
     let image: UIImage
     let selection: Binding<Value>
@@ -95,9 +83,5 @@ public struct SelectionMenuInTransportBar<Value>: TransportBarElement {
 extension SelectionMenu: TransportBarElement where Body == SelectionMenuInTransportBar<Value> {
     public init(title: String, image: UIImage, selection: Binding<Value>, @SelectionMenuContentBuilder<Value> content: () -> SelectionMenuContent<Value>) {
         self.body = .init(title: title, image: image, selection: selection, content: content())
-    }
-
-    public func toMenuElement() -> UIMenuElement {
-        body.toMenuElement()
     }
 }

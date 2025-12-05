@@ -1,10 +1,10 @@
 import SwiftUI
 
 public struct Section<Body, Value> {
-    private let body: Body
+    public let body: Body
 }
 
-public struct SectionInMenu: MenuElement {
+public struct SectionInMenu: MenuBody {
     let title: String?
     let content: SectionContent
 
@@ -17,13 +17,9 @@ extension Section: MenuElement where Body == SectionInMenu, Value == Never {
     public init(title: String? = nil, @SectionContentBuilder content: () -> SectionContent) {
         self.body = .init(title: title, content: content())
     }
-
-    public func toMenuElement() -> UIMenuElement {
-        body.toMenuElement()
-    }
 }
 
-public struct SectionInSelectionMenu<Value>: SelectionMenuElement {
+public struct SectionInSelectionMenu<Value>: SelectionMenuBody {
     let title: String?
     let content: SelectionSectionContent<Value>
 
@@ -36,43 +32,27 @@ extension Section: SelectionMenuElement where Body == SectionInSelectionMenu<Val
     public init(title: String? = nil, @SelectionSectionContentBuilder<Value> content: () -> SelectionSectionContent<Value>) {
         self.body = .init(title: title, content: content())
     }
-
-    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
-        body.toMenuElement(updating: selection)
-    }
 }
 
 // Non-supported embeddings below this line
 
-extension Section: SectionElement where Body == SectionElementNotSupported, Value == Never {
+extension Section: SectionElement where Body == SectionBodyNotSupported, Value == Never {
     @available(*, unavailable, message: "Nested sections are not supported")
     public init(title: String? = nil, @SectionContentBuilder content: () -> SectionContent) {
         fatalError()
     }
-
-    public func toMenuElement() -> UIMenuElement {
-        fatalError()
-    }
 }
 
-extension Section: TransportBarElement where Body == TransportBarElementNotSupported, Value == Never {
+extension Section: TransportBarElement where Body == TransportBarBodyNotSupported, Value == Never {
     @available(*, unavailable, message: "Sections cannot be displayed at the transport bar level")
     public init(title: String? = nil, @SectionContentBuilder content: () -> SectionContent) {
         fatalError()
     }
-
-    public func toMenuElement() -> UIMenuElement {
-        fatalError()
-    }
 }
 
-extension Section: SelectionSectionElement where Body == SelectionSectionElementNotSupported<Value> {
+extension Section: SelectionSectionElement where Body == SelectionSectionBodyNotSupported<Value> {
     @available(*, unavailable, message: "Nested sections are not supported")
     public init(title: String? = nil, @SectionContentBuilder content: () -> SectionContent) {
-        fatalError()
-    }
-
-    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
         fatalError()
     }
 }

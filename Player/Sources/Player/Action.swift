@@ -1,10 +1,10 @@
 import SwiftUI
 
 public struct Action<Body, Value> {
-    private let body: Body
+    public let body: Body
 }
 
-public struct ActionInMenu: MenuElement {
+public struct ActionInMenu: MenuBody {
     let title: String
     let image: UIImage?
     let handler: () -> Void
@@ -18,13 +18,9 @@ extension Action: MenuElement where Body == ActionInMenu, Value == Never {
     public init(title: String, image: UIImage? = nil, handler: @escaping () -> Void) {
         self.body = .init(title: title, image: image, handler: handler)
     }
-
-    public func toMenuElement() -> UIMenuElement {
-        body.toMenuElement()
-    }
 }
 
-public struct ActionInSection: SectionElement {
+public struct ActionInSection: SectionBody {
     let title: String
     let image: UIImage?
     let handler: () -> Void
@@ -38,13 +34,9 @@ extension Action: SectionElement where Body == ActionInSection, Value == Never {
     public init(title: String, image: UIImage? = nil, handler: @escaping () -> Void) {
         self.body = .init(title: title, image: image, handler: handler)
     }
-
-    public func toMenuElement() -> UIMenuElement {
-        body.toMenuElement()
-    }
 }
 
-public struct ActionInTransportBar: TransportBarElement {
+public struct ActionInTransportBar: TransportBarBody {
     let title: String
     let image: UIImage
     let handler: () -> Void
@@ -63,21 +55,13 @@ extension Action: TransportBarElement where Body == ActionInTransportBar, Value 
     public init(title: String, handler: @escaping () -> Void) {
         fatalError()
     }
-
-    public func toMenuElement() -> UIMenuElement {
-        body.toMenuElement()
-    }
 }
 
 // Non-supported embeddings below this line
 
-extension Action: SelectionMenuElement where Body == SelectionMenuElementNotSupported<Value> {
+extension Action: SelectionMenuElement where Body == SelectionMenuBodyNotSupported<Value> {
     @available(*, unavailable, message: "Actions are not supported here")
     public init(title: String, image: UIImage? = nil, handler: @escaping (Value) -> Void = { _ in }) {
-        fatalError()
-    }
-
-    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
         fatalError()
     }
 }

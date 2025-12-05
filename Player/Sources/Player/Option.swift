@@ -1,10 +1,10 @@
 import SwiftUI
 
 public struct Option<Body, Value> {
-    private let body: Body
+    public let body: Body
 }
 
-public struct OptionInSelectionMenu<Value>: SelectionMenuElement where Value: Equatable {
+public struct OptionInSelectionMenu<Value>: SelectionMenuBody where Value: Equatable {
     let title: String
     let image: UIImage?
     let value: Value
@@ -29,13 +29,9 @@ extension Option: SelectionMenuElement where Body == OptionInSelectionMenu<Value
     public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping (Value) -> Void = { _ in }) {
         self.body = .init(title: title, image: image, value: value, handler: handler)
     }
-
-    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
-        body.toMenuElement(updating: selection)
-    }
 }
 
-public struct OptionInSection<Value>: SelectionSectionElement where Value: Equatable {
+public struct OptionInSection<Value>: SelectionSectionBody where Value: Equatable {
     let title: String
     let image: UIImage?
     let value: Value
@@ -60,43 +56,27 @@ extension Option: SelectionSectionElement where Body == OptionInSection<Value> {
     public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping (Value) -> Void = { _ in }) {
         self.body = .init(title: title, image: image, value: value, handler: handler)
     }
-
-    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
-        body.toMenuElement(updating: selection)
-    }
 }
 
 // Non-supported embeddings below this line
 
-extension Option: MenuElement where Body == MenuElementNotSupported {
+extension Option: MenuElement where Body == MenuBodyNotSupported {
     @available(*, unavailable, message: "Options cannot be used in `Menu`. Use `SelectionMenu` instead")
     public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping (Value) -> Void = { _ in }) {
         fatalError()
     }
-
-    public func toMenuElement() -> UIMenuElement {
-        fatalError()
-    }
 }
 
-extension Option: SectionElement where Body == SectionElementNotSupported {
+extension Option: SectionElement where Body == SectionBodyNotSupported {
     @available(*, unavailable, message: "Options cannot be used in sections not belonging to a `SelectionMenu`")
     public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping (Value) -> Void = { _ in }) {
         fatalError()
     }
-
-    public func toMenuElement() -> UIMenuElement {
-        fatalError()
-    }
 }
 
-extension Option: TransportBarElement where Body == TransportBarElementNotSupported {
+extension Option: TransportBarElement where Body == TransportBarBodyNotSupported {
     @available(*, unavailable, message: "Options cannot be displayed at the transport bar level")
     public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping (Value) -> Void = { _ in }) {
-        fatalError()
-    }
-
-    public func toMenuElement() -> UIMenuElement {
         fatalError()
     }
 }
