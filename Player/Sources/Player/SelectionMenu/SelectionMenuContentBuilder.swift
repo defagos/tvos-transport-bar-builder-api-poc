@@ -24,6 +24,10 @@ public enum SelectionMenuContentBuilder<Value> {
         component
     }
 
+    public static func buildArray(_ components: [Component]) -> Component {
+        components.flatMap(\.self)
+    }
+
     public static func buildFinalResult(_ component: Component) -> Result {
         .init(children: component)
     }
