@@ -4,6 +4,8 @@ public struct Menu<Body, Value> {
     public let body: Body
 }
 
+// MARK: `Menu` embedding
+
 public struct MenuInMenu: MenuBody {
     let title: String
     let image: UIImage?
@@ -19,6 +21,8 @@ extension Menu: MenuElement where Body == MenuInMenu, Value == Never {
         self.body = .init(title: title, image: image, content: content())
     }
 }
+
+// MARK: `Section` embedding
 
 public struct MenuInSection: SectionBody {
     let title: String
@@ -36,6 +40,26 @@ extension Menu: SectionElement where Body == MenuInSection, Value == Never {
     }
 }
 
+// MARK: `SelectionMenu` embedding
+
+extension Menu: SelectionMenuElement where Body == SelectionMenuBodyNotSupported<Value> {
+    @available(*, unavailable, message: "Menus are not supported in selection menu sections. Use `SelectionMenu` instead")
+    public init(title: String, image: UIImage? = nil, @MenuContentBuilder content: () -> MenuContent) {
+        fatalError()
+    }
+}
+
+// MARK: `SelectionSection` embedding
+
+extension Menu: SelectionSectionElement where Body == SelectionSectionBodyNotSupported<Value> {
+    @available(*, unavailable, message: "Menus are not supported in selection menu sections")
+    public init(title: String, image: UIImage? = nil, @MenuContentBuilder content: () -> MenuContent) {
+        fatalError()
+    }
+}
+
+// MARK: `TransportBar` embedding
+
 public struct MenuInTransportBar: TransportBarBody {
     let title: String
     let image: UIImage
@@ -49,12 +73,5 @@ public struct MenuInTransportBar: TransportBarBody {
 extension Menu: TransportBarElement where Body == MenuInTransportBar, Value == Never {
     public init(title: String, image: UIImage, @MenuContentBuilder content: () -> MenuContent) {
         self.body = .init(title: title, image: image, content: content())
-    }
-}
-
-extension Menu: SelectionMenuElement where Body == SelectionMenuBodyNotSupported<Value> {
-    @available(*, unavailable, message: "Menus are not supported here")
-    public init(title: String, image: UIImage? = nil, @MenuContentBuilder content: () -> MenuContent) {
-        fatalError()
     }
 }

@@ -4,6 +4,8 @@ public struct Toggle<Body, Value> {
     public let body: Body
 }
 
+// MARK: `Menu` embedding
+
 public struct ToggleInMenu: MenuBody {
     let title: String
     let image: UIImage?
@@ -29,6 +31,8 @@ extension Toggle: MenuElement where Body == ToggleInMenu, Value == Never {
     }
 }
 
+// MARK: `Section` embedding
+
 public struct ToggleInSection: SectionBody {
     let title: String
     let image: UIImage?
@@ -51,6 +55,34 @@ extension Toggle: SectionElement where Body == ToggleInSection, Value == Never {
         self.body = .init(title: title, image: image, isOn: isOn, handler: handler)
     }
 }
+
+// MARK: `SelectionMenu` embedding
+
+extension Toggle: SelectionMenuElement where Body == SelectionMenuBodyNotSupported<Value> {
+    @available(*, unavailable, message: "Toggles are not supported in selection menus")
+    public init(title: String, image: UIImage? = nil, isOn: Binding<Bool>, handler: @escaping (Bool) -> Void = { _ in }) {
+        fatalError()
+    }
+
+    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
+        fatalError()
+    }
+}
+
+// MARK: `SelectionSection` embedding
+
+extension Toggle: SelectionSectionElement where Body == SelectionSectionBodyNotSupported<Value> {
+    @available(*, unavailable, message: "Toggles are not supported in selection menus")
+    public init(title: String, image: UIImage? = nil, isOn: Binding<Bool>, handler: @escaping (Bool) -> Void = { _ in }) {
+        fatalError()
+    }
+
+    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
+        fatalError()
+    }
+}
+
+// MARK: `TransportBar` embedding
 
 public struct ToggleInTransportBar: TransportBarBody {
     let title: String
@@ -76,28 +108,6 @@ extension Toggle: TransportBarElement where Body == ToggleInTransportBar, Value 
 
     @available(*, unavailable, message: "Elements displayed at the transport bar level require an associated image")
     public init(title: String, isOn: Binding<Bool>, handler: @escaping (Bool) -> Void = { _ in }) {
-        fatalError()
-    }
-}
-
-extension Toggle: SelectionMenuElement where Body == SelectionMenuBodyNotSupported<Value> {
-    @available(*, unavailable, message: "Toggles are not supported in selection menus")
-    public init(title: String, image: UIImage? = nil, isOn: Binding<Bool>, handler: @escaping (Bool) -> Void = { _ in }) {
-        fatalError()
-    }
-
-    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
-        fatalError()
-    }
-}
-
-extension Toggle: SelectionSectionElement where Body == SelectionSectionBodyNotSupported<Value> {
-    @available(*, unavailable, message: "Toggles are not supported in selection menus")
-    public init(title: String, image: UIImage? = nil, isOn: Binding<Bool>, handler: @escaping (Bool) -> Void = { _ in }) {
-        fatalError()
-    }
-
-    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
         fatalError()
     }
 }

@@ -4,6 +4,26 @@ public struct Option<Body, Value> {
     public let body: Body
 }
 
+// MARK: `Menu` embedding
+
+extension Option: MenuElement where Body == MenuBodyNotSupported {
+    @available(*, unavailable, message: "Options cannot be used in menus. Use `SelectionMenu` instead")
+    public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping (Value) -> Void = { _ in }) {
+        fatalError()
+    }
+}
+
+// MARK: `Section` embedding
+
+extension Option: SectionElement where Body == SectionBodyNotSupported {
+    @available(*, unavailable, message: "Options cannot be used in sections not belonging to a `SelectionMenu`")
+    public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping (Value) -> Void = { _ in }) {
+        fatalError()
+    }
+}
+
+// MARK: `SelectionMenu` embedding
+
 public struct OptionInSelectionMenu<Value>: SelectionMenuBody where Value: Equatable {
     let title: String
     let image: UIImage?
@@ -31,7 +51,9 @@ extension Option: SelectionMenuElement where Body == OptionInSelectionMenu<Value
     }
 }
 
-public struct OptionInSection<Value>: SelectionSectionBody where Value: Equatable {
+// MARK: `SelectionSection` embedding
+
+public struct OptionInSelectionSection<Value>: SelectionSectionBody where Value: Equatable {
     let title: String
     let image: UIImage?
     let value: Value
@@ -52,25 +74,13 @@ public struct OptionInSection<Value>: SelectionSectionBody where Value: Equatabl
     }
 }
 
-extension Option: SelectionSectionElement where Body == OptionInSection<Value> {
+extension Option: SelectionSectionElement where Body == OptionInSelectionSection<Value> {
     public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping (Value) -> Void = { _ in }) {
         self.body = .init(title: title, image: image, value: value, handler: handler)
     }
 }
 
-extension Option: MenuElement where Body == MenuBodyNotSupported {
-    @available(*, unavailable, message: "Options cannot be used in `Menu`. Use `SelectionMenu` instead")
-    public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping (Value) -> Void = { _ in }) {
-        fatalError()
-    }
-}
-
-extension Option: SectionElement where Body == SectionBodyNotSupported {
-    @available(*, unavailable, message: "Options cannot be used in sections not belonging to a `SelectionMenu`")
-    public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping (Value) -> Void = { _ in }) {
-        fatalError()
-    }
-}
+// MARK: `TransportBar` embedding
 
 extension Option: TransportBarElement where Body == TransportBarBodyNotSupported {
     @available(*, unavailable, message: "Options cannot be displayed at the transport bar level")

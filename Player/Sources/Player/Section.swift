@@ -4,6 +4,8 @@ public struct Section<Body, Value> {
     public let body: Body
 }
 
+// MARK: `Menu` embedding
+
 public struct SectionInMenu: MenuBody {
     let title: String?
     let content: SectionContent
@@ -18,6 +20,17 @@ extension Section: MenuElement where Body == SectionInMenu, Value == Never {
         self.body = .init(title: title, content: content())
     }
 }
+
+// MARK: `Section` embedding
+
+extension Section: SectionElement where Body == SectionBodyNotSupported, Value == Never {
+    @available(*, unavailable, message: "Nested sections are not supported")
+    public init(title: String? = nil, @SectionContentBuilder content: () -> SectionContent) {
+        fatalError()
+    }
+}
+
+// MARK: `SelectionMenu` embedding
 
 public struct SectionInSelectionMenu<Value>: SelectionMenuBody {
     let title: String?
@@ -34,22 +47,19 @@ extension Section: SelectionMenuElement where Body == SectionInSelectionMenu<Val
     }
 }
 
-extension Section: SectionElement where Body == SectionBodyNotSupported, Value == Never {
-    @available(*, unavailable, message: "Nested sections are not supported")
-    public init(title: String? = nil, @SectionContentBuilder content: () -> SectionContent) {
-        fatalError()
-    }
-}
-
-extension Section: TransportBarElement where Body == TransportBarBodyNotSupported, Value == Never {
-    @available(*, unavailable, message: "Sections cannot be displayed at the transport bar level")
-    public init(title: String? = nil, @SectionContentBuilder content: () -> SectionContent) {
-        fatalError()
-    }
-}
+// MARK: `SelectionSection` embedding
 
 extension Section: SelectionSectionElement where Body == SelectionSectionBodyNotSupported<Value> {
     @available(*, unavailable, message: "Nested sections are not supported")
+    public init(title: String? = nil, @SectionContentBuilder content: () -> SectionContent) {
+        fatalError()
+    }
+}
+
+// MARK: `TransportBar` embedding
+
+extension Section: TransportBarElement where Body == TransportBarBodyNotSupported, Value == Never {
+    @available(*, unavailable, message: "Sections cannot be displayed at the transport bar level")
     public init(title: String? = nil, @SectionContentBuilder content: () -> SectionContent) {
         fatalError()
     }

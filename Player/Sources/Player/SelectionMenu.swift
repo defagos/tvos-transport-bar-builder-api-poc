@@ -4,6 +4,8 @@ public struct SelectionMenu<Body, Value> {
     public let body: Body
 }
 
+// MARK: `Menu` embedding
+
 public struct SelectionMenuInMenu<Value>: MenuBody {
     let title: String
     let image: UIImage?
@@ -25,6 +27,8 @@ extension SelectionMenu: MenuElement where Body == SelectionMenuInMenu<Value> {
         self.body = .init(title: title, image: image, selection: selection, content: content())
     }
 }
+
+// MARK: `Section` embedding
 
 public struct SelectionMenuInSection<Value>: SectionBody {
     let title: String
@@ -48,6 +52,8 @@ extension SelectionMenu: SectionElement where Body == SelectionMenuInSection<Val
     }
 }
 
+// MARK: `SelectionMenu` embedding
+
 public struct SelectionMenuInSelectionMenu<Value>: SelectionMenuBody {
     let title: String
     let image: UIImage?
@@ -68,6 +74,17 @@ extension SelectionMenu: SelectionMenuElement where Body == SelectionMenuInSelec
         fatalError()
     }
 }
+
+// MARK: `SelectionSection` embedding
+
+extension SelectionMenu: SelectionSectionElement where Body == SelectionSectionBodyNotSupported<Value> {
+    @available(*, unavailable, message: "Selection menus cannot be nested in sections")
+    public init(title: String, image: UIImage? = nil, @SelectionMenuContentBuilder<Value> content: () -> SelectionMenuContent<Value>) {
+        fatalError()
+    }
+}
+
+// MARK: `TransportBar` embedding
 
 public struct SelectionMenuInTransportBar<Value>: TransportBarBody {
     let title: String
