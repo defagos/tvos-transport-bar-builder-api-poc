@@ -4,13 +4,7 @@ public struct SelectionMenu<Body, Value> {
     private let body: Body
 }
 
-extension SelectionMenu: MenuElementConvertible where Body: MenuElementConvertible {
-    public func toMenuElement() -> UIMenuElement {
-        body.toMenuElement()
-    }
-}
-
-public struct SelectionMenuInMenu<Value>: MenuElementConvertible {
+public struct SelectionMenuInMenu<Value>: MenuElement {
     let title: String
     let image: UIImage?
     let selection: Binding<Value>
@@ -30,9 +24,13 @@ extension SelectionMenu: MenuElement where Body == SelectionMenuInMenu<Value> {
     ) {
         self.body = .init(title: title, image: image, selection: selection, content: content())
     }
+
+    public func toMenuElement() -> UIMenuElement {
+        body.toMenuElement()
+    }
 }
 
-public struct SelectionMenuInSection<Value>: MenuElementConvertible {
+public struct SelectionMenuInSection<Value>: SectionElement {
     let title: String
     let image: UIImage?
     let selection: Binding<Value>
@@ -52,21 +50,19 @@ extension SelectionMenu: SectionElement where Body == SelectionMenuInSection<Val
     ) {
         self.body = .init(title: title, image: image, selection: selection, content: content())
     }
+
+    public func toMenuElement() -> UIMenuElement {
+        body.toMenuElement()
+    }
 }
 
-public struct SelectionMenuInSelectionMenu<Value>: SelectionMenuElementConvertible {
+public struct SelectionMenuInSelectionMenu<Value>: SelectionMenuElement {
     let title: String
     let image: UIImage?
     let content: SelectionMenuContent<Value>
 
     public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
         UIMenu(title: title, image: image, options: [.singleSelection], children: content.toMenuElements(updating: selection))
-    }
-}
-
-extension SelectionMenu: SelectionMenuElementConvertible where Body == SelectionMenuInSelectionMenu<Value> {
-    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
-        body.toMenuElement(updating: selection)
     }
 }
 
@@ -79,9 +75,13 @@ extension SelectionMenu: SelectionMenuElement where Body == SelectionMenuInSelec
     public init(title: String, image: UIImage? = nil, selection: Binding<Value>, @SelectionMenuContentBuilder<Value> content: () -> SelectionMenuContent<Value>) {
         fatalError()
     }
+
+    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
+        body.toMenuElement(updating: selection)
+    }
 }
 
-public struct SelectionMenuInTransportBar<Value>: MenuElementConvertible {
+public struct SelectionMenuInTransportBar<Value>: TransportBarElement {
     let title: String
     let image: UIImage
     let selection: Binding<Value>
@@ -95,5 +95,9 @@ public struct SelectionMenuInTransportBar<Value>: MenuElementConvertible {
 extension SelectionMenu: TransportBarElement where Body == SelectionMenuInTransportBar<Value> {
     public init(title: String, image: UIImage, selection: Binding<Value>, @SelectionMenuContentBuilder<Value> content: () -> SelectionMenuContent<Value>) {
         self.body = .init(title: title, image: image, selection: selection, content: content())
+    }
+
+    public func toMenuElement() -> UIMenuElement {
+        body.toMenuElement()
     }
 }

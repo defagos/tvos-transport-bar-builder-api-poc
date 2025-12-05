@@ -4,13 +4,7 @@ public struct Menu<Body, Value> {
     private let body: Body
 }
 
-extension Menu: MenuElementConvertible where Body: MenuElementConvertible {
-    public func toMenuElement() -> UIMenuElement {
-        body.toMenuElement()
-    }
-}
-
-public struct MenuInMenu: MenuElementConvertible {
+public struct MenuInMenu: MenuElement {
     let title: String
     let image: UIImage?
     let content: MenuContent
@@ -24,9 +18,13 @@ extension Menu: MenuElement where Body == MenuInMenu, Value == Never {
     public init(title: String, image: UIImage? = nil, @MenuContentBuilder content: () -> MenuContent) {
         self.body = .init(title: title, image: image, content: content())
     }
+
+    public func toMenuElement() -> UIMenuElement {
+        body.toMenuElement()
+    }
 }
 
-public struct MenuInSelection: MenuElementConvertible {
+public struct MenuInSection: SectionElement {
     let title: String
     let image: UIImage?
     let content: MenuContent
@@ -36,13 +34,17 @@ public struct MenuInSelection: MenuElementConvertible {
     }
 }
 
-extension Menu: SectionElement where Body == MenuInSelection, Value == Never {
+extension Menu: SectionElement where Body == MenuInSection, Value == Never {
     public init(title: String, image: UIImage? = nil, @MenuContentBuilder content: () -> MenuContent) {
         self.body = .init(title: title, image: image, content: content())
     }
+
+    public func toMenuElement() -> UIMenuElement {
+        body.toMenuElement()
+    }
 }
 
-public struct MenuInTransportBar: MenuElementConvertible {
+public struct MenuInTransportBar: TransportBarElement {
     let title: String
     let image: UIImage
     let content: MenuContent
@@ -56,19 +58,21 @@ extension Menu: TransportBarElement where Body == MenuInTransportBar, Value == N
     public init(title: String, image: UIImage, @MenuContentBuilder content: () -> MenuContent) {
         self.body = .init(title: title, image: image, content: content())
     }
+
+    public func toMenuElement() -> UIMenuElement {
+        body.toMenuElement()
+    }
 }
 
 // Non-supported embeddings below this line
 
-extension Menu: SelectionMenuElementConvertible where Body == SelectionMenuElementNotSupported<Value> {
-    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
-        fatalError()
-    }
-}
-
 extension Menu: SelectionMenuElement where Body == SelectionMenuElementNotSupported<Value> {
     @available(*, unavailable, message: "Menus are not supported here")
     public init(title: String, image: UIImage? = nil, @MenuContentBuilder content: () -> MenuContent) {
+        fatalError()
+    }
+
+    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
         fatalError()
     }
 }

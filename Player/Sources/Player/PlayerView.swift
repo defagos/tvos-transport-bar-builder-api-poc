@@ -3,7 +3,7 @@ import SwiftUI
 
 public struct PlayerView: UIViewControllerRepresentable {
     private let player: AVPlayer
-    private var transportBarContent = MenuContent()
+    private var transportBarContent = TransportBarContent()
 
     public init(player: AVPlayer) {
         self.player = player
@@ -20,7 +20,7 @@ public struct PlayerView: UIViewControllerRepresentable {
 }
 
 public extension PlayerView {
-    func transportBar(@TransportBarContentBuilder content: () -> MenuContent) -> Self {
+    func transportBar(@TransportBarContentBuilder content: () -> TransportBarContent) -> Self {
         var view = self
         view.transportBarContent = content()
         return view

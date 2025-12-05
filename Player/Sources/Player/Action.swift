@@ -4,13 +4,7 @@ public struct Action<Body, Value> {
     private let body: Body
 }
 
-extension Action: MenuElementConvertible where Body: MenuElementConvertible {
-    public func toMenuElement() -> UIMenuElement {
-        body.toMenuElement()
-    }
-}
-
-public struct ActionInMenu: MenuElementConvertible {
+public struct ActionInMenu: MenuElement {
     let title: String
     let image: UIImage?
     let handler: () -> Void
@@ -24,9 +18,13 @@ extension Action: MenuElement where Body == ActionInMenu, Value == Never {
     public init(title: String, image: UIImage? = nil, handler: @escaping () -> Void) {
         self.body = .init(title: title, image: image, handler: handler)
     }
+
+    public func toMenuElement() -> UIMenuElement {
+        body.toMenuElement()
+    }
 }
 
-public struct ActionInSection: MenuElementConvertible {
+public struct ActionInSection: SectionElement {
     let title: String
     let image: UIImage?
     let handler: () -> Void
@@ -40,9 +38,13 @@ extension Action: SectionElement where Body == ActionInSection, Value == Never {
     public init(title: String, image: UIImage? = nil, handler: @escaping () -> Void) {
         self.body = .init(title: title, image: image, handler: handler)
     }
+
+    public func toMenuElement() -> UIMenuElement {
+        body.toMenuElement()
+    }
 }
 
-public struct ActionInTransportBar: MenuElementConvertible {
+public struct ActionInTransportBar: TransportBarElement {
     let title: String
     let image: UIImage
     let handler: () -> Void
@@ -61,19 +63,21 @@ extension Action: TransportBarElement where Body == ActionInTransportBar, Value 
     public init(title: String, handler: @escaping () -> Void) {
         fatalError()
     }
+
+    public func toMenuElement() -> UIMenuElement {
+        body.toMenuElement()
+    }
 }
 
 // Non-supported embeddings below this line
 
-extension Action: SelectionMenuElementConvertible where Body == SelectionMenuElementNotSupported<Value> {
-    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
-        fatalError()
-    }
-}
-
 extension Action: SelectionMenuElement where Body == SelectionMenuElementNotSupported<Value> {
     @available(*, unavailable, message: "Actions are not supported here")
     public init(title: String, image: UIImage? = nil, handler: @escaping (Value) -> Void = { _ in }) {
+        fatalError()
+    }
+
+    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
         fatalError()
     }
 }

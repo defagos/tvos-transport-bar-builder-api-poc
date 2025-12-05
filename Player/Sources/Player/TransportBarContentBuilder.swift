@@ -2,7 +2,7 @@
 public enum TransportBarContentBuilder {
     public typealias Expression = TransportBarElement
     public typealias Component = [Expression]
-    public typealias Result = MenuContent
+    public typealias Result = TransportBarContent
 
     public static func buildExpression(_ expression: Expression) -> Component {
         [expression]

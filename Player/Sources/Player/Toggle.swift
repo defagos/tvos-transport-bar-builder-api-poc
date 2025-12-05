@@ -4,13 +4,7 @@ public struct Toggle<Body, Value> {
     private let body: Body
 }
 
-extension Toggle: MenuElementConvertible where Body: MenuElementConvertible {
-    public func toMenuElement() -> UIMenuElement {
-        body.toMenuElement()
-    }
-}
-
-public struct ToggleInMenu: MenuElementConvertible {
+public struct ToggleInMenu: MenuElement {
     let title: String
     let image: UIImage?
     let isOn: Binding<Bool>
@@ -33,9 +27,13 @@ extension Toggle: MenuElement where Body == ToggleInMenu, Value == Never {
     public init(title: String, image: UIImage? = nil, isOn: Binding<Bool>, handler: @escaping (Bool) -> Void = { _ in }) {
         self.body = .init(title: title, image: image, isOn: isOn, handler: handler)
     }
+
+    public func toMenuElement() -> UIMenuElement {
+        body.toMenuElement()
+    }
 }
 
-public struct ToggleInSection: MenuElementConvertible {
+public struct ToggleInSection: SectionElement {
     let title: String
     let image: UIImage?
     let isOn: Binding<Bool>
@@ -56,9 +54,13 @@ extension Toggle: SectionElement where Body == ToggleInSection, Value == Never {
     public init(title: String, image: UIImage? = nil, isOn: Binding<Bool>, handler: @escaping (Bool) -> Void = { _ in }) {
         self.body = .init(title: title, image: image, isOn: isOn, handler: handler)
     }
+
+    public func toMenuElement() -> UIMenuElement {
+        body.toMenuElement()
+    }
 }
 
-public struct ToggleInTransportBar: MenuElementConvertible {
+public struct ToggleInTransportBar: TransportBarElement {
     let title: String
     let image: UIImage
     let isOn: Binding<Bool>
@@ -84,19 +86,32 @@ extension Toggle: TransportBarElement where Body == ToggleInTransportBar, Value 
     public init(title: String, isOn: Binding<Bool>, handler: @escaping (Bool) -> Void = { _ in }) {
         fatalError()
     }
+
+    public func toMenuElement() -> UIMenuElement {
+        body.toMenuElement()
+    }
 }
 
 // Non-supported embeddings below this line
 
-extension Toggle: SelectionMenuElementConvertible where Body == SelectionMenuElementNotSupported<Value> {
+extension Toggle: SelectionMenuElement where Body == SelectionMenuElementNotSupported<Value> {
+    @available(*, unavailable, message: "Toggles are not supported in selection menus")
+    public init(title: String, image: UIImage? = nil, isOn: Binding<Bool>, handler: @escaping (Bool) -> Void = { _ in }) {
+        fatalError()
+    }
+
     public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
         fatalError()
     }
 }
 
-extension Toggle: SelectionMenuElement where Body == SelectionMenuElementNotSupported<Value> {
-    @available(*, unavailable, message: "Toggles are not supported here")
+extension Toggle: SelectionSectionElement where Body == SelectionSectionElementNotSupported<Value> {
+    @available(*, unavailable, message: "Toggles are not supported in selection menus")
     public init(title: String, image: UIImage? = nil, isOn: Binding<Bool>, handler: @escaping (Bool) -> Void = { _ in }) {
+        fatalError()
+    }
+
+    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
         fatalError()
     }
 }

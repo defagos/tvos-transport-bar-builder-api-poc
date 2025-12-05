@@ -2,7 +2,7 @@
 public enum SectionContentBuilder {
     public typealias Expression = SectionElement
     public typealias Component = [Expression]
-    public typealias Result = MenuContent
+    public typealias Result = SectionContent
 
     public static func buildExpression(_ expression: Expression) -> Component {
         [expression]

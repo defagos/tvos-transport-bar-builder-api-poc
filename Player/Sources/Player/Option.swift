@@ -4,13 +4,7 @@ public struct Option<Body, Value> {
     private let body: Body
 }
 
-extension Option: SelectionMenuElementConvertible where Body: SelectionMenuElementConvertible<Value> {
-    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
-        body.toMenuElement(updating: selection)
-    }
-}
-
-public struct OptionInSelectionMenu<Value>: SelectionMenuElementConvertible where Value: Equatable {
+public struct OptionInSelectionMenu<Value>: SelectionMenuElement where Value: Equatable {
     let title: String
     let image: UIImage?
     let value: Value
@@ -31,23 +25,78 @@ public struct OptionInSelectionMenu<Value>: SelectionMenuElementConvertible wher
     }
 }
 
-extension Option: SelectionMenuElement, SelectionSectionElement where Body == OptionInSelectionMenu<Value> {
+extension Option: SelectionMenuElement where Body == OptionInSelectionMenu<Value> {
     public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping (Value) -> Void = { _ in }) {
         self.body = .init(title: title, image: image, value: value, handler: handler)
+    }
+
+    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
+        body.toMenuElement(updating: selection)
+    }
+}
+
+public struct OptionInSection<Value>: SelectionSectionElement where Value: Equatable {
+    let title: String
+    let image: UIImage?
+    let value: Value
+    let handler: (Value) -> Void
+
+    private func state(selection: Binding<Value>) -> UIMenuElement.State {
+        selection.wrappedValue == value ? .on : .off
+    }
+
+    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
+        // TODO: If possible, should alter selection of other buttons, possibly via publisher and UIAction subclass/wrapper? Currently
+        //       we can see two entries marked when selecting another item. Would also prevent direct UIMenuElement creation
+        UIAction(title: title, image: image, state: state(selection: selection)) { action in
+            selection.wrappedValue = value
+            action.state = state(selection: selection)
+            handler(value)
+        }
+    }
+}
+
+extension Option: SelectionSectionElement where Body == OptionInSection<Value> {
+    public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping (Value) -> Void = { _ in }) {
+        self.body = .init(title: title, image: image, value: value, handler: handler)
+    }
+
+    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
+        body.toMenuElement(updating: selection)
     }
 }
 
 // Non-supported embeddings below this line
 
-extension Option: MenuElementConvertible where Body == MenuElementNotSupported {
+extension Option: MenuElement where Body == MenuElementNotSupported {
+    @available(*, unavailable, message: "Options cannot be used in `Menu`. Use `SelectionMenu` instead")
+    public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping (Value) -> Void = { _ in }) {
+        fatalError()
+    }
+
     public func toMenuElement() -> UIMenuElement {
         fatalError()
     }
 }
 
-extension Option: MenuElement, TransportBarElement where Body == MenuElementNotSupported {
-    @available(*, unavailable, message: "Options cannot be used here")
+extension Option: SectionElement where Body == SectionElementNotSupported {
+    @available(*, unavailable, message: "Options cannot be used in sections not belonging to a `SelectionMenu`")
     public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping (Value) -> Void = { _ in }) {
+        fatalError()
+    }
+
+    public func toMenuElement() -> UIMenuElement {
+        fatalError()
+    }
+}
+
+extension Option: TransportBarElement where Body == TransportBarElementNotSupported {
+    @available(*, unavailable, message: "Options cannot be displayed at the transport bar level")
+    public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping (Value) -> Void = { _ in }) {
+        fatalError()
+    }
+
+    public func toMenuElement() -> UIMenuElement {
         fatalError()
     }
 }

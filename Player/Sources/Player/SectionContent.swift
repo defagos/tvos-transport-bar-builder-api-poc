@@ -1,9 +1,9 @@
 import UIKit
 
-public struct MenuContent {
-    private let children: [MenuElement]
+public struct SectionContent {
+    private let children: [SectionElement]
 
-    init(children: [MenuElement] = []) {
+    init(children: [SectionElement] = []) {
         self.children = children
     }
 
