@@ -52,8 +52,6 @@ extension Menu: TransportBarElement where Body == MenuInTransportBar, Value == N
     }
 }
 
-// Non-supported embeddings below this line
-
 extension Menu: SelectionMenuElement where Body == SelectionMenuBodyNotSupported<Value> {
     @available(*, unavailable, message: "Menus are not supported here")
     public init(title: String, image: UIImage? = nil, @MenuContentBuilder content: () -> MenuContent) {

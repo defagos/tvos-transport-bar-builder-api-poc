@@ -80,8 +80,6 @@ extension Toggle: TransportBarElement where Body == ToggleInTransportBar, Value 
     }
 }
 
-// Non-supported embeddings below this line
-
 extension Toggle: SelectionMenuElement where Body == SelectionMenuBodyNotSupported<Value> {
     @available(*, unavailable, message: "Toggles are not supported in selection menus")
     public init(title: String, image: UIImage? = nil, isOn: Binding<Bool>, handler: @escaping (Bool) -> Void = { _ in }) {

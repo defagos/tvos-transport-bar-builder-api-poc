@@ -34,8 +34,6 @@ extension Section: SelectionMenuElement where Body == SectionInSelectionMenu<Val
     }
 }
 
-// Non-supported embeddings below this line
-
 extension Section: SectionElement where Body == SectionBodyNotSupported, Value == Never {
     @available(*, unavailable, message: "Nested sections are not supported")
     public init(title: String? = nil, @SectionContentBuilder content: () -> SectionContent) {

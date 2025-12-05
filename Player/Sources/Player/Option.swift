@@ -58,8 +58,6 @@ extension Option: SelectionSectionElement where Body == OptionInSection<Value> {
     }
 }
 
-// Non-supported embeddings below this line
-
 extension Option: MenuElement where Body == MenuBodyNotSupported {
     @available(*, unavailable, message: "Options cannot be used in `Menu`. Use `SelectionMenu` instead")
     public init(title: String, image: UIImage? = nil, value: Value, handler: @escaping (Value) -> Void = { _ in }) {

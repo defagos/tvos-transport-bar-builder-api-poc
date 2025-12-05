@@ -57,8 +57,6 @@ extension Action: TransportBarElement where Body == ActionInTransportBar, Value 
     }
 }
 
-// Non-supported embeddings below this line
-
 extension Action: SelectionMenuElement where Body == SelectionMenuBodyNotSupported<Value> {
     @available(*, unavailable, message: "Actions are not supported here")
     public init(title: String, image: UIImage? = nil, handler: @escaping (Value) -> Void = { _ in }) {
