@@ -54,23 +54,9 @@ extension Picker: SectionElement where Body == PickerInSection<Value> {
 
 // MARK: `Picker` embedding
 
-public struct PickerInPicker<Value>: PickerBody {
-    let title: String
-    let image: UIImage?
-    let content: PickerContent<Value>
-
-    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
-        UIMenu(title: title, image: image, identifier: .init(title), options: .singleSelection, children: content.toMenuElements(updating: selection))
-    }
-}
-
-extension Picker: PickerElement where Body == PickerInPicker<Value> {
+extension Picker: PickerElement where Body == PickerBodyNotSupported<Value> {
+    @available(*, unavailable, message: "Nested pickers are not supported")
     public init(title: String, image: UIImage? = nil, @PickerContentBuilder<Value> content: () -> PickerContent<Value>) {
-        self.body = .init(title: title, image: image, content: content())
-    }
-
-    @available(*, unavailable, message: "Nested pickers with different selections are not supported. Remove the `selection` parameter")
-    public init(title: String, image: UIImage? = nil, selection: Binding<Value>, @PickerContentBuilder<Value> content: () -> PickerContent<Value>) {
         fatalError()
     }
 }

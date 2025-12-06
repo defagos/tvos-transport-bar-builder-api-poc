@@ -3,8 +3,6 @@ import Player
 import SwiftUI
 
 enum Quality {
-    case audioOnly
-    case veryLow
     case low
     case medium
     case high
@@ -142,14 +140,6 @@ struct ContentView: View {
                             print("--> Select \(value)")
                         }
                         Option(title: "Lossless", value: .lossless) { value in
-                            print("--> Select \(value)")
-                        }
-                    }
-                    Picker(title: "Poor networks") {
-                        Option(title: "Very Low", value: .veryLow) { value in
-                            print("--> Select \(value)")
-                        }
-                        Option(title: "Audio-only", value: .audioOnly) { value in
                             print("--> Select \(value)")
                         }
                     }
