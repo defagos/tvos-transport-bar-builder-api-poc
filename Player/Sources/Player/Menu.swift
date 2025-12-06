@@ -12,7 +12,7 @@ public struct MenuInMenu: MenuBody {
     let content: MenuContent
 
     public func toMenuElement() -> UIMenuElement {
-        UIMenu(title: title, image: image, identifier: .init(title), children: content.toMenuElements())
+        UIMenu(title: title, image: image, children: content.toMenuElements())
     }
 }
 
@@ -30,7 +30,7 @@ public struct MenuInSection: SectionBody {
     let content: MenuContent
 
     public func toMenuElement() -> UIMenuElement {
-        UIMenu(title: title, image: image, identifier: .init(title), children: content.toMenuElements())
+        UIMenu(title: title, image: image, children: content.toMenuElements())
     }
 }
 
@@ -66,7 +66,7 @@ public struct MenuInTransportBar: TransportBarBody {
     let content: MenuContent
 
     public func toMenuElement() -> UIMenuElement {
-        UIMenu(title: title, image: image, identifier: .init(title), children: content.toMenuElements())
+        UIMenu(title: title, image: image, children: content.toMenuElements())
     }
 }
 

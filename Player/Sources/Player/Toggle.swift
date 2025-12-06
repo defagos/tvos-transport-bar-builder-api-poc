@@ -17,7 +17,7 @@ public struct ToggleInMenu: MenuBody {
     }
 
     public func toMenuElement() -> UIMenuElement {
-        UIAction(title: title, image: image, identifier: .init(title), state: state(isOn: isOn)) { action in
+        UIAction(title: title, image: image, state: state(isOn: isOn)) { action in
             isOn.wrappedValue.toggle()
             action.state = state(isOn: isOn)
             handler(isOn.wrappedValue)
@@ -40,7 +40,7 @@ public struct ToggleInSection: SectionBody {
     let handler: (Bool) -> Void
 
     public func toMenuElement() -> UIMenuElement {
-        let action = UIAction(title: title, image: image, identifier: .init(title)) { action in
+        let action = UIAction(title: title, image: image) { action in
             isOn.wrappedValue.toggle()
             action.state = isOn.wrappedValue ? .on : .off
             handler(isOn.wrappedValue)
@@ -91,7 +91,7 @@ public struct ToggleInTransportBar: TransportBarBody {
     let handler: (Bool) -> Void
 
     public func toMenuElement() -> UIMenuElement {
-        let action = UIAction(title: title, image: image, identifier: .init(title)) { action in
+        let action = UIAction(title: title, image: image) { action in
             isOn.wrappedValue.toggle()
             action.state = isOn.wrappedValue ? .on : .off
             handler(isOn.wrappedValue)

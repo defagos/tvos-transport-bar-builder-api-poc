@@ -35,7 +35,7 @@ public struct OptionInPicker<Value>: PickerBody where Value: Equatable {
     }
 
     public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
-        UIAction(title: title, image: image, identifier: .init(title), state: state(selection: selection)) { action in
+        UIAction(title: title, image: image, state: state(selection: selection)) { action in
             selection.wrappedValue = value
             action.state = state(selection: selection)
             handler(value)
@@ -64,7 +64,7 @@ public struct OptionInPickerSection<Value>: PickerSectionBody where Value: Equat
     public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
         // TODO: If possible, should alter selection of other buttons, possibly via publisher and UIAction subclass/wrapper? Currently
         //       we can see two entries marked when selecting another item. Would also prevent direct UIMenuElement creation
-        UIAction(title: title, image: image, identifier: .init(title), state: state(selection: selection)) { action in
+        UIAction(title: title, image: image, state: state(selection: selection)) { action in
             selection.wrappedValue = value
             action.state = state(selection: selection)
             handler(value)
