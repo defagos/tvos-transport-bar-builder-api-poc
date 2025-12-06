@@ -63,10 +63,6 @@ extension Toggle: PickerElement where Body == PickerBodyNotSupported<Value> {
     public init(title: String, image: UIImage? = nil, isOn: Binding<Bool>, handler: @escaping (Bool) -> Void = { _ in }) {
         fatalError()
     }
-
-    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
-        fatalError()
-    }
 }
 
 // MARK: `PickerSection` embedding
@@ -74,10 +70,6 @@ extension Toggle: PickerElement where Body == PickerBodyNotSupported<Value> {
 extension Toggle: PickerSectionElement where Body == PickerSectionBodyNotSupported<Value> {
     @available(*, unavailable, message: "Toggles are not supported in picker sections")
     public init(title: String, image: UIImage? = nil, isOn: Binding<Bool>, handler: @escaping (Bool) -> Void = { _ in }) {
-        fatalError()
-    }
-
-    public func toMenuElement(updating selection: Binding<Value>) -> UIMenuElement {
         fatalError()
     }
 }
