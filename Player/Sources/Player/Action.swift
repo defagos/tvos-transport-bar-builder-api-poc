@@ -44,7 +44,7 @@ extension Action: SectionElement where Body == ActionInSection, Value == Never {
 
 extension Action: PickerElement where Body == PickerBodyNotSupported<Value> {
     @available(*, unavailable, message: "Actions are not supported in pickers")
-    public init(title: String, image: UIImage? = nil, handler: @escaping (Value) -> Void = { _ in }) {
+    public init(title: String, image: UIImage? = nil, handler: @escaping () -> Void = {}) {
         fatalError()
     }
 }
@@ -53,7 +53,7 @@ extension Action: PickerElement where Body == PickerBodyNotSupported<Value> {
 
 extension Action: PickerSectionElement where Body == PickerSectionBodyNotSupported<Value> {
     @available(*, unavailable, message: "Actions are not supported in picker sections")
-    public init(title: String, image: UIImage? = nil, handler: @escaping (Value) -> Void = { _ in }) {
+    public init(title: String, image: UIImage? = nil, handler: @escaping () -> Void = {}) {
         fatalError()
     }
 }
